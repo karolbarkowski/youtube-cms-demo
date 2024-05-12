@@ -11,15 +11,7 @@ const RenderBlocks: React.FC<Props> = ({ layout }) => (
     {layout.map((block, i) => {
       const Block: React.FC<any> = componentsMap[block.blockType]
 
-      if (Block) {
-        return (
-          <section key={i}>
-            <Block {...block} />
-          </section>
-        )
-      }
-
-      return null
+      return Block ? <Block key={i} {...block} /> : null
     })}
   </div>
 )

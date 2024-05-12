@@ -3,14 +3,15 @@ import { Block } from 'payload/types'
 
 export type Type = {
   ctaText: string
-  image: string
+  image: any
+  blockType: 'hero'
 }
 
 const Hero: Block = {
   slug: 'hero',
   labels: {
-    singular: 'Hero',
-    plural: 'Heroes',
+    singular: 'Hero Block',
+    plural: 'Hero Blocks',
   },
   fields: [
     {

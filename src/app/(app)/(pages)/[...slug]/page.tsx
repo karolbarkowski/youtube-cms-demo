@@ -31,7 +31,7 @@ const Page = async (ctx: {
   return (
     <LayoutDefault>
       <RenderBlocks layout={page.docs[0].layout} />
-      <RenderPageContent content={page.docs[0].content} />
+      {/* <RenderPageContent content={page.docs[0].content} /> */}
     </LayoutDefault>
   )
 }

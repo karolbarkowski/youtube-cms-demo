@@ -1,3 +1,4 @@
+import './tailwind.scss'
 import './globals.scss'
 
 import { Quicksand } from 'next/font/google'
@@ -14,7 +15,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <html className={quickSand.className}>
       <head>{/* todo: add meta here */}</head>
       <body>
-        <header>
+        <header className="text-3xl font-bold underline">
           <h1>HEADER</h1>
         </header>
 

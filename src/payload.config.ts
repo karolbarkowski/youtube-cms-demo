@@ -32,6 +32,7 @@ export default buildConfig({
   globals: [Header, Footer],
   editor: lexicalEditor({}),
   // plugins: [payloadCloud()], // TODO: Re-enable when cloud supports 3.0
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

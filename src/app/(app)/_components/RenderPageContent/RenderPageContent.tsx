@@ -1,5 +1,4 @@
 import React from 'react'
-import { componentsMap } from '../../../../blocks'
 
 type Props = {
   content: any
