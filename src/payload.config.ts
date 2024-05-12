@@ -1,6 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 // import { payloadCloud } from '@payloadcms/plugin-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
@@ -15,6 +15,7 @@ import { StudyCategory } from './collections/StudiesCategories'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { Department } from './collections/Departments'
+import Hero from './blocks/hero/hero.block'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,7 +31,14 @@ export default buildConfig({
   },
   collections: [Pages, Users, Study, StudyCategory, Media, SubscribeFormSubmission, Department],
   globals: [Header, Footer],
-  editor: lexicalEditor({}),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      // BlocksFeature({
+      // blocks: [Hero],
+      // }),
+    ],
+  }),
   // plugins: [payloadCloud()], // TODO: Re-enable when cloud supports 3.0
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   secret: process.env.PAYLOAD_SECRET || '',
