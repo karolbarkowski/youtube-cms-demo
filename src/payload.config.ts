@@ -1,6 +1,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 // import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import nestedDocsPlugin from '@payloadcms/plugin-nested-docs'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 import sharp from 'sharp'
@@ -16,6 +17,7 @@ import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { Department } from './collections/Departments'
 import Hero from './blocks/hero/hero.block'
+import generateBreadcrumbsUrl from './utilities/generateBreadcrumbsUrl'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,6 +30,13 @@ export default buildConfig({
       password: 'MKB1983!!',
     },
     dateFormat: 'dd.MM.yyyy',
+    livePreview: {
+      url: ({ data, locale }) =>
+        `${process.env.NEXT_PUBLIC_SITE_URL}/preview${data.path}${
+          locale ? `?locale=${locale.code}` : ''
+        }`,
+      collections: ['pages'],
+    },
   },
   collections: [Pages, Users, Study, StudyCategory, Media, SubscribeFormSubmission, Department],
   globals: [Header, Footer],
@@ -39,7 +48,13 @@ export default buildConfig({
       // }),
     ],
   }),
-  // plugins: [payloadCloud()], // TODO: Re-enable when cloud supports 3.0
+  plugins: [
+    // [payloadCloud()], // TODO: Re-enable when cloud supports 3.0
+    nestedDocsPlugin({
+      collections: ['pages'],
+      generateURL: generateBreadcrumbsUrl,
+    }),
+  ],
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
