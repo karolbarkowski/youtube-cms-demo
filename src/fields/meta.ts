@@ -10,6 +10,9 @@ const meta: Field = {
   name: 'meta',
   label: 'Meta',
   type: 'group',
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       name: 'title',
