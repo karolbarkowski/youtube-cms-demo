@@ -1,19 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  --baselinePx: 20px;
-  --baseFontSize: 18px;
-
   width: 100%;
   height: 100%;
-  background-color: #080808;
 }
 
 body {
-  color: #ffffff;
   margin: 0;
-  font-size: var(--baseFontSize);
-  line-height: var(--baselinePx);
+  padding: 0;
 }

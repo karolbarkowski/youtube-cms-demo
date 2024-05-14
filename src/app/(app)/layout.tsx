@@ -1,10 +1,11 @@
-import './tailwind.css'
 import './globals.scss'
 
-import { Quicksand } from 'next/font/google'
+import { Work_Sans } from 'next/font/google'
 import React from 'react'
+import Header from './_components/Header/header'
+import Footer from './_components/Footer/footer'
 
-const quickSand = Quicksand({
+const quickSand = Work_Sans({
   subsets: ['latin'],
   weight: '400',
 })
@@ -12,14 +13,13 @@ const quickSand = Quicksand({
 /* Our app sits here to not cause any conflicts with payload's root layout  */
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <html className={quickSand.className}>
+    <html className={`${quickSand.className} bg-white-0 text-gray-300`}>
       <head>{/* todo: add meta here */}</head>
-      <body>
-        <header className="text-3xl font-bold text-zinc-100">
-          <h1>HEADER</h1>
-        </header>
 
-        {children}
+      <body className="flex h-screen flex-col">
+        <Header />
+        <main className="container mx-auto flex-1 p-12">{children}</main>
+        <Footer />
       </body>
     </html>
   )
