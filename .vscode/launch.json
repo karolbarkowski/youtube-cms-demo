@@ -2,11 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "command": "yarn dev",
+      "name": "Start Ecommerce",
       "request": "launch",
-      "name": "Launch Program",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/test/dev.ts", "fields"]
-    }
+      "type": "node-terminal",
+    },
   ]
 }
