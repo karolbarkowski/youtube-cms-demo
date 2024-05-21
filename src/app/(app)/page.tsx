@@ -4,7 +4,7 @@ import LayoutDefault from './_components/PageLayouts/layoutDefault'
 const Page = async () => {
   return (
     <LayoutDefault>
-      <p>Default document page</p>
+      <p>HOME PAGE</p>
     </LayoutDefault>
   )
 }

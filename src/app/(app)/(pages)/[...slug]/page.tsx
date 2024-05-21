@@ -1,10 +1,9 @@
 import React from 'react'
 import { Type as PageType } from '../../../../collections/Pages'
-import RenderBlocks from '../../_components/RenderBlocks/RenderBlocks'
+import RenderBlocks from '../../../../utilities/blocks-renderer'
 import LayoutDefault from '../../_components/PageLayouts/layoutDefault'
 import { NextApiRequest, NextApiResponse } from 'next'
-import RenderPageContent from '../../_components/RenderPageContent/RenderPageContent'
-import fetchPage from '@/utilities/fetchPage'
+import fetchPage from '@/utilities/fetch-page'
 import { notFound } from 'next/navigation'
 
 export type Props = {
@@ -25,7 +24,6 @@ const Page = async (ctx: {
   return (
     <LayoutDefault>
       <RenderBlocks layout={page.layout} />
-      {/* <RenderPageContent content={page.docs[0].content} /> */}
     </LayoutDefault>
   )
 }

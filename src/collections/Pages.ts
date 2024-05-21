@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload/types'
-import slug from '../fields/slug'
-import meta from '../fields/meta'
+import slug from './fields/slug'
+import meta from './fields/meta'
 import Spacer, { Type as SpacerType } from '@/blocks/spacer/spacer.block'
 import Hero, { Type as HeroType } from '@/blocks/hero/hero.block'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'

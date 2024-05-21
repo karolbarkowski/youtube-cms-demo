@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload/types'
-import slug from '../fields/slug'
-import meta from '../fields/meta'
-import image from '../fields/image'
+import slug from './fields/slug'
+import meta from './fields/meta'
+import image from './fields/image'
 
 export const Study: CollectionConfig = {
   slug: 'studies',

@@ -1,4 +1,4 @@
-import image from '@/fields/image'
+import image from '@/collections/fields/image'
 import { Block } from 'payload/types'
 
 export type Type = {

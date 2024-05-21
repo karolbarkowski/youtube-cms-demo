@@ -13,11 +13,11 @@ import { Pages } from './collections/Pages'
 import { SubscribeFormSubmission } from './collections/SubscribeFormSubmissions'
 import { Study } from './collections/Studies'
 import { StudyCategory } from './collections/StudiesCategories'
-import { Header } from './globals/Header'
-import { Footer } from './globals/Footer'
 import { Department } from './collections/Departments'
 import Hero from './blocks/hero/hero.block'
-import generateBreadcrumbsUrl from './utilities/generateBreadcrumbsUrl'
+import generateBreadcrumbsUrl from './utilities/generate-breadcrumbs-url'
+import { Header } from './collections/globals/Header'
+import { Footer } from './collections/globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

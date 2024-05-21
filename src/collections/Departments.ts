@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types'
-import slug from '../fields/slug'
-import image from '../fields/image'
+import slug from './fields/slug'
+import image from './fields/image'
 
 export const Department: CollectionConfig = {
   slug: 'departments',

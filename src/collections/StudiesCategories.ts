@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types'
-import slug from '../fields/slug'
+import slug from './fields/slug'
 
 export const StudyCategory: CollectionConfig = {
   slug: 'studies-categories',

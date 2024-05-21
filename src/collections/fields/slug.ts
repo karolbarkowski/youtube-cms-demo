@@ -8,6 +8,9 @@ const slug: Field = {
   admin: {
     position: 'sidebar',
   },
+  access: {
+    read: () => true,
+  },
   hooks: {
     beforeValidate: [formatSlug('title')],
   },
