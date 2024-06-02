@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { Banner } from 'payload/components'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { SeedButton } from './SeedButton'
 
@@ -44,7 +44,7 @@ const BeforeDashboard: React.FC = () => {
           {' for more details.'}
         </li>
         <li>
-          <Link href="/admin/collections/products">Link each of your products</Link>
+          <Link to="/admin/collections/products">Link each of your products</Link>
           {' to Stripe by selecting the corresponding product using the dropdown under '}
           <i>Product Details</i>.
         </li>

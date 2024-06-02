@@ -1,6 +1,6 @@
 import { webpackBundler } from '@payloadcms/bundler-webpack' // bundler-import
 import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
-import { payloadCloud } from '@payloadcms/plugin-cloud'
+// import { payloadCloud } from '@payloadcms/plugin-cloud'
 // import formBuilder from '@payloadcms/plugin-form-builder'
 import nestedDocs from '@payloadcms/plugin-nested-docs'
 import redirects from '@payloadcms/plugin-redirects'
@@ -12,14 +12,12 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 
-import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import { Orders } from './collections/Orders'
 import { Pages } from './collections/Pages'
-import Products from './collections/Products'
 import Users from './collections/Users'
 import BeforeDashboard from './components/BeforeDashboard'
-import BeforeLogin from './components/BeforeLogin'
+import BeforeLogin from './components/BeforeDashboard/BeforeLogin'
 import { createPaymentIntent } from './endpoints/create-payment-intent'
 import { customersProxy } from './endpoints/customers'
 import { productsProxy } from './endpoints/products'
@@ -29,9 +27,13 @@ import { Header } from './globals/Header'
 import { Settings } from './globals/Settings'
 import { priceUpdated } from './stripe/webhooks/priceUpdated'
 import { productUpdated } from './stripe/webhooks/productUpdated'
+import { Manufacturer, ProductCategory, Warehouse } from './collections/eCom'
+import Products from './collections/eCom/Products'
+import { ProductImportsAdmin } from './globals/ProductImportsAdmin'
+import UOMs from './collections/eCom/UOM'
 
 const generateTitle: GenerateTitle = () => {
-  return 'My Store'
+  return 'MediaPart'
 }
 
 const mockModulePath = path.resolve(__dirname, './emptyModuleMock.js')
@@ -45,6 +47,7 @@ export default buildConfig({
     user: Users.slug,
     bundler: webpackBundler(), // bundler-config
     components: {
+      // Nav: Nav,
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: [BeforeLogin],
@@ -60,7 +63,8 @@ export default buildConfig({
           alias: {
             ...config.resolve?.alias,
             dotenv: path.resolve(__dirname, './dotenv.js'),
-            [path.resolve(__dirname, 'collections/Products/hooks/beforeChange')]: mockModulePath,
+            [path.resolve(__dirname, 'collections/eCom/Products/hooks/beforeChange')]:
+              mockModulePath,
             [path.resolve(__dirname, 'collections/Users/hooks/createStripeCustomer')]:
               mockModulePath,
             [path.resolve(__dirname, 'collections/Users/endpoints/customer')]: mockModulePath,
@@ -82,8 +86,18 @@ export default buildConfig({
   }),
   // database-adapter-config-end
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Pages, Products, Orders, Media, Categories, Users],
-  globals: [Settings, Header, Footer],
+  collections: [
+    Pages,
+    Products,
+    Orders,
+    Media,
+    Users,
+    UOMs,
+    Warehouse,
+    ProductCategory,
+    Manufacturer,
+  ],
+  globals: [Settings, Header, Footer, ProductImportsAdmin],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -137,13 +151,13 @@ export default buildConfig({
       collections: ['pages', 'products'],
     }),
     nestedDocs({
-      collections: ['categories'],
+      collections: ['product-categories'],
     }),
     seo({
       collections: ['pages', 'products'],
       generateTitle,
       uploadsCollection: 'media',
     }),
-    payloadCloud(),
+    // payloadCloud(),
   ],
 })
