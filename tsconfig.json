@@ -8,6 +8,7 @@
       "esnext",
       "es2015"
     ],
+    "typeRoots": [ "src/payload/components/Imports/@types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,

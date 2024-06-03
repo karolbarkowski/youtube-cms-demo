@@ -1,7 +1,7 @@
 import React from 'react'
 import { draftMode } from 'next/headers'
 
-import { Category, Page } from '../../../payload/payload-types'
+import { ProductCategory, Page } from '../../../payload/payload-types'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
@@ -15,7 +15,7 @@ const Products = async () => {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: Page | null = null
-  let categories: Category[] | null = null
+  let categories: ProductCategory[] | null = null
 
   try {
     page = await fetchDoc<Page>({
@@ -24,7 +24,7 @@ const Products = async () => {
       draft: isDraftMode,
     })
 
-    categories = await fetchDocs<Category>('categories')
+    categories = await fetchDocs<ProductCategory>('product-category')
   } catch (error) {
     console.log(error)
   }

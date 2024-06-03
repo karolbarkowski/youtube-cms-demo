@@ -3,7 +3,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
-import { Category, Page as PageType } from '../../../payload/payload-types'
+import { ProductCategory, Page as PageType } from '../../../payload/payload-types'
 import { staticHome } from '../../../payload/seed/home-static'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
@@ -29,7 +29,7 @@ export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: PageType | null = null
-  let categories: Category[] | null = null
+  let categories: ProductCategory[] | null = null
 
   try {
     page = await fetchDoc<PageType>({
@@ -38,7 +38,7 @@ export default async function Page({ params: { slug = 'home' } }) {
       draft: isDraftMode,
     })
 
-    categories = await fetchDocs<Category>('categories')
+    categories = await fetchDocs<ProductCategory>('product-category')
   } catch (error) {
     // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
     // so swallow the error here and simply render the page with fallback data where necessary

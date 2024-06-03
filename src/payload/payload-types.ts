@@ -24,8 +24,11 @@ export interface Config {
     products: Product;
     orders: Order;
     media: Media;
-    categories: Category;
     users: User;
+    uom: Uom;
+    warehouses: Warehouse;
+    'product-category': ProductCategory;
+    manufacturer: Manufacturer;
     redirects: Redirect;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -34,6 +37,7 @@ export interface Config {
     settings: Settings;
     header: Header;
     footer: Footer;
+    'wholesaler-imports': WholesalerImport;
   };
 }
 /**
@@ -137,7 +141,7 @@ export interface Page {
         }[];
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: 'products' | null;
-        categories?: (string | Category)[] | null;
+        categories?: (string | ProductCategory)[] | null;
         limit?: number | null;
         selectedDocs?:
           | {
@@ -192,21 +196,15 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "product-category".
  */
-export interface Category {
+export interface ProductCategory {
   id: string;
-  title: string;
-  media?: string | Media | null;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  erpId: string;
+  name: string;
+  title?: string | null;
+  description?: string | null;
+  keywords?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -288,7 +286,7 @@ export interface Product {
             }[];
             populateBy?: ('collection' | 'selection') | null;
             relationTo?: 'products' | null;
-            categories?: (string | Category)[] | null;
+            categories?: (string | ProductCategory)[] | null;
             limit?: number | null;
             selectedDocs?:
               | {
@@ -382,7 +380,7 @@ export interface Product {
             }[];
             populateBy?: ('collection' | 'selection') | null;
             relationTo?: 'products' | null;
-            categories?: (string | Category)[] | null;
+            categories?: (string | ProductCategory)[] | null;
             limit?: number | null;
             selectedDocs?:
               | {
@@ -403,7 +401,34 @@ export interface Product {
           }
       )[]
     | null;
-  categories?: (string | Category)[] | null;
+  erpId?: string | null;
+  price?: number | null;
+  pricePrevious?: number | null;
+  vat?: number | null;
+  weight?: number | null;
+  quantity?: number | null;
+  quantityMin?: number | null;
+  quantityStep?: number | null;
+  name?: string | null;
+  code?: string | null;
+  ean?: string | null;
+  description?: string | null;
+  keywords?: string | null;
+  mediaVideo?:
+    | {
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  mediaMmages?:
+    | {
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  categories?: (string | ProductCategory)[] | null;
+  manufacturer?: (string | null) | Manufacturer;
+  warehouse?: (string | null) | Warehouse;
   relatedProducts?: (string | Product)[] | null;
   slug?: string | null;
   skipSync?: boolean | null;
@@ -415,6 +440,32 @@ export interface Product {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "manufacturer".
+ */
+export interface Manufacturer {
+  id: string;
+  erpId: string;
+  name: string;
+  title?: string | null;
+  description?: string | null;
+  keywords?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "warehouses".
+ */
+export interface Warehouse {
+  id: string;
+  erpId: string;
+  name: string;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -460,6 +511,17 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "uom".
+ */
+export interface Uom {
+  id: string;
+  erpId: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -576,6 +638,16 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wholesaler-imports".
+ */
+export interface WholesalerImport {
+  id: string;
+  title?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

@@ -47,7 +47,7 @@ export const Archive: Block = {
       type: 'relationship',
       name: 'categories',
       label: 'Categories To Show',
-      relationTo: 'categories',
+      relationTo: 'product-category',
       hasMany: true,
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
