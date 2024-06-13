@@ -5,11 +5,11 @@ import { Archive } from '../../blocks/ArchiveBlock'
 import { CallToAction } from '../../blocks/CallToAction'
 import { Content } from '../../blocks/Content'
 import { MediaBlock } from '../../blocks/MediaBlock'
-import { hero } from '../../fields/hero'
 import { slugField } from '../../fields/slug'
 import { populateArchiveBlock } from '../../hooks/populateArchiveBlock'
 import { adminsOrPublished } from './access/adminsOrPublished'
 import { revalidatePage } from './hooks/revalidatePage'
+import { ProductsSlider } from '../../blocks/ProductsSlider'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -42,6 +42,12 @@ export const Pages: CollectionConfig = {
       required: true,
     },
     {
+      name: 'layout',
+      type: 'blocks',
+      required: true,
+      blocks: [CallToAction, Content, MediaBlock, Archive, ProductsSlider],
+    },
+    {
       name: 'publishedOn',
       type: 'date',
       admin: {
@@ -60,26 +66,6 @@ export const Pages: CollectionConfig = {
           },
         ],
       },
-    },
-    {
-      type: 'tabs',
-      tabs: [
-        {
-          label: 'Hero',
-          fields: [hero],
-        },
-        {
-          label: 'Content',
-          fields: [
-            {
-              name: 'layout',
-              type: 'blocks',
-              required: true,
-              blocks: [CallToAction, Content, MediaBlock, Archive],
-            },
-          ],
-        },
-      ],
     },
     slugField(),
   ],

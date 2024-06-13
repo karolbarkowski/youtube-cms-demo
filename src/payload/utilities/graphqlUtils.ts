@@ -18,7 +18,7 @@ const BuildRequest = async (queryObject: object): Promise<any> => {
   }
 
   const json = await response.json()
-  if (json?.errors) throw new Error(json?.errors[0]?.message)
+  if (json?.errors) console.log(json)
 
   return json
 }

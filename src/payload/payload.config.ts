@@ -12,25 +12,26 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 
-import { Media } from './collections/Media'
-import { Orders } from './collections/Orders'
-import { Pages } from './collections/Pages'
-import Users from './collections/Users'
 import BeforeDashboard from './components/BeforeDashboard'
 import BeforeLogin from './components/BeforeDashboard/BeforeLogin'
 import { createPaymentIntent } from './endpoints/create-payment-intent'
 import { customersProxy } from './endpoints/customers'
 import { productsProxy } from './endpoints/products'
 import { seed } from './endpoints/seed'
-import { Footer } from './globals/Footer'
-import { Header } from './globals/Header'
-import { Settings } from './globals/Settings'
 import { priceUpdated } from './stripe/webhooks/priceUpdated'
 import { productUpdated } from './stripe/webhooks/productUpdated'
-import { Manufacturer, ProductCategory, Warehouse } from './collections/eCom'
-import Products from './collections/eCom/Products'
-import { ProductImportsAdmin } from './globals/ProductImportsAdmin'
-import UOMs from './collections/eCom/UOM'
+import {
+  Manufacturer,
+  Media,
+  Orders,
+  Pages,
+  ProductCategory,
+  Products,
+  UOMs,
+  Users,
+  Warehouse,
+} from './collections'
+import { Settings, Header, Footer, ProductImportsAdmin } from './globals'
 
 const generateTitle: GenerateTitle = () => {
   return 'MediaPart'

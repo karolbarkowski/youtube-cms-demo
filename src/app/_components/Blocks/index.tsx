@@ -9,6 +9,7 @@ import { RelatedProducts, type RelatedProductsProps } from '../../_blocks/Relate
 import { toKebabCase } from '../../_utilities/toKebabCase'
 import { BackgroundColor } from '../BackgroundColor/index'
 import { VerticalPadding, VerticalPaddingOptions } from '../VerticalPadding/index'
+import { ProductsSliderBlock } from '../../_blocks/ProductsSliderBlock'
 
 const blockComponents = {
   cta: CallToActionBlock,
@@ -16,6 +17,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   archive: ArchiveBlock,
   relatedProducts: RelatedProducts,
+  productsSlider: ProductsSliderBlock,
 }
 
 export const Blocks: React.FC<{
@@ -24,9 +26,7 @@ export const Blocks: React.FC<{
   disableBottomPadding?: boolean
 }> = props => {
   const { disableTopPadding, disableBottomPadding, blocks } = props
-
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
-
   if (hasBlocks) {
     return (
       <Fragment>

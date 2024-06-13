@@ -24,7 +24,7 @@ export const productFetchByErpId = async (erpId: string): Promise<Product> => {
             mediaVideo {
               url
             }
-            mediaMmages {
+            mediaImages {
               url
             }
             manufacturer {
@@ -81,4 +81,48 @@ export const productUpdate = async (id: string, product: Product): Promise<numbe
 
   let json = await BuildRequest(body)
   return json?.data?.updateProduct?.id as number
+}
+
+export const productsLatest = async (count: number): Promise<Product[]> => {
+  const body = {
+    query: `query RecentProduct {
+              Products(sort: "createdAt",  limit:${count} ) {
+                  docs {
+                    id
+                    title
+                    vat
+                    price
+                    name,
+                    mediaImages {
+                      isMain
+                      url
+                    }
+                  }
+                }
+              }`,
+  }
+  const json = await BuildRequest(body)
+  return json.data?.Products?.docs
+}
+
+export const productsBestsellers = async (count: number): Promise<Product[]> => {
+  const body = {
+    query: `query BestsellerProduct {
+              Products(sort: "createdAt",  limit:${count} ) {
+                  docs {
+                    id
+                    title
+                    vat
+                    price
+                    name,
+                    mediaImages {
+                      isMain
+                      url
+                    }
+                  }
+                }
+              }`,
+  }
+  const json = await BuildRequest(body)
+  return json.data?.Products?.docs
 }

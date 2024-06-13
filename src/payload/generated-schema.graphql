@@ -63,9 +63,8 @@ type Query {
 type Page {
   id: String
   title: String
-  publishedOn: DateTime
-  hero: Page_Hero
   layout: [Page_Layout!]!
+  publishedOn: DateTime
   slug: String
   meta: Page_Meta
   updatedAt: DateTime
@@ -73,461 +72,7 @@ type Page {
   _status: Page__status
 }
 
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
-
-type Page_Hero {
-  type: Page_Hero_type
-  richText(depth: Int): JSON
-  links: [Page_Hero_Links!]
-  media(where: Page_Hero_Media_where): Media
-}
-
-enum Page_Hero_type {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
-
-type Page_Hero_Links {
-  link: Page_Hero_Links_Link
-  id: String
-}
-
-type Page_Hero_Links_Link {
-  type: Page_Hero_Links_Link_type
-  newTab: Boolean
-  reference(draft: Boolean): Page_Hero_Links_Link_Reference_Relationship
-  url: String
-  label: String
-  icon(where: Page_Hero_Links_Link_Icon_where): Media
-  appearance: Page_Hero_Links_Link_appearance
-}
-
-enum Page_Hero_Links_Link_type {
-  reference
-  custom
-}
-
-type Page_Hero_Links_Link_Reference_Relationship {
-  relationTo: Page_Hero_Links_Link_Reference_RelationTo
-  value: Page_Hero_Links_Link_Reference
-}
-
-enum Page_Hero_Links_Link_Reference_RelationTo {
-  pages
-}
-
-union Page_Hero_Links_Link_Reference = Page
-
-type Media {
-  id: String
-  alt: String!
-  caption(depth: Int): JSON
-  updatedAt: DateTime
-  createdAt: DateTime
-  url: String
-  filename: String
-  mimeType: String
-  filesize: Float
-  width: Float
-  height: Float
-  focalX: Float
-  focalY: Float
-}
-
-input Page_Hero_Links_Link_Icon_where {
-  alt: Page_Hero_Links_Link_Icon_alt_operator
-  caption: Page_Hero_Links_Link_Icon_caption_operator
-  updatedAt: Page_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: Page_Hero_Links_Link_Icon_createdAt_operator
-  url: Page_Hero_Links_Link_Icon_url_operator
-  filename: Page_Hero_Links_Link_Icon_filename_operator
-  mimeType: Page_Hero_Links_Link_Icon_mimeType_operator
-  filesize: Page_Hero_Links_Link_Icon_filesize_operator
-  width: Page_Hero_Links_Link_Icon_width_operator
-  height: Page_Hero_Links_Link_Icon_height_operator
-  focalX: Page_Hero_Links_Link_Icon_focalX_operator
-  focalY: Page_Hero_Links_Link_Icon_focalY_operator
-  id: Page_Hero_Links_Link_Icon_id_operator
-  AND: [Page_Hero_Links_Link_Icon_where_and]
-  OR: [Page_Hero_Links_Link_Icon_where_or]
-}
-
-input Page_Hero_Links_Link_Icon_alt_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Page_Hero_Links_Link_Icon_caption_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Links_Link_Icon_where_and {
-  alt: Page_Hero_Links_Link_Icon_alt_operator
-  caption: Page_Hero_Links_Link_Icon_caption_operator
-  updatedAt: Page_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: Page_Hero_Links_Link_Icon_createdAt_operator
-  url: Page_Hero_Links_Link_Icon_url_operator
-  filename: Page_Hero_Links_Link_Icon_filename_operator
-  mimeType: Page_Hero_Links_Link_Icon_mimeType_operator
-  filesize: Page_Hero_Links_Link_Icon_filesize_operator
-  width: Page_Hero_Links_Link_Icon_width_operator
-  height: Page_Hero_Links_Link_Icon_height_operator
-  focalX: Page_Hero_Links_Link_Icon_focalX_operator
-  focalY: Page_Hero_Links_Link_Icon_focalY_operator
-  id: Page_Hero_Links_Link_Icon_id_operator
-  AND: [Page_Hero_Links_Link_Icon_where_and]
-  OR: [Page_Hero_Links_Link_Icon_where_or]
-}
-
-input Page_Hero_Links_Link_Icon_where_or {
-  alt: Page_Hero_Links_Link_Icon_alt_operator
-  caption: Page_Hero_Links_Link_Icon_caption_operator
-  updatedAt: Page_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: Page_Hero_Links_Link_Icon_createdAt_operator
-  url: Page_Hero_Links_Link_Icon_url_operator
-  filename: Page_Hero_Links_Link_Icon_filename_operator
-  mimeType: Page_Hero_Links_Link_Icon_mimeType_operator
-  filesize: Page_Hero_Links_Link_Icon_filesize_operator
-  width: Page_Hero_Links_Link_Icon_width_operator
-  height: Page_Hero_Links_Link_Icon_height_operator
-  focalX: Page_Hero_Links_Link_Icon_focalX_operator
-  focalY: Page_Hero_Links_Link_Icon_focalY_operator
-  id: Page_Hero_Links_Link_Icon_id_operator
-  AND: [Page_Hero_Links_Link_Icon_where_and]
-  OR: [Page_Hero_Links_Link_Icon_where_or]
-}
-
-enum Page_Hero_Links_Link_appearance {
-  default
-  primary
-  secondary
-}
-
-input Page_Hero_Media_where {
-  alt: Page_Hero_Media_alt_operator
-  caption: Page_Hero_Media_caption_operator
-  updatedAt: Page_Hero_Media_updatedAt_operator
-  createdAt: Page_Hero_Media_createdAt_operator
-  url: Page_Hero_Media_url_operator
-  filename: Page_Hero_Media_filename_operator
-  mimeType: Page_Hero_Media_mimeType_operator
-  filesize: Page_Hero_Media_filesize_operator
-  width: Page_Hero_Media_width_operator
-  height: Page_Hero_Media_height_operator
-  focalX: Page_Hero_Media_focalX_operator
-  focalY: Page_Hero_Media_focalY_operator
-  id: Page_Hero_Media_id_operator
-  AND: [Page_Hero_Media_where_and]
-  OR: [Page_Hero_Media_where_or]
-}
-
-input Page_Hero_Media_alt_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Page_Hero_Media_caption_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  exists: Boolean
-}
-
-input Page_Hero_Media_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Page_Hero_Media_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Page_Hero_Media_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Media_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Media_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Media_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Media_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Media_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Media_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Media_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Page_Hero_Media_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_Hero_Media_where_and {
-  alt: Page_Hero_Media_alt_operator
-  caption: Page_Hero_Media_caption_operator
-  updatedAt: Page_Hero_Media_updatedAt_operator
-  createdAt: Page_Hero_Media_createdAt_operator
-  url: Page_Hero_Media_url_operator
-  filename: Page_Hero_Media_filename_operator
-  mimeType: Page_Hero_Media_mimeType_operator
-  filesize: Page_Hero_Media_filesize_operator
-  width: Page_Hero_Media_width_operator
-  height: Page_Hero_Media_height_operator
-  focalX: Page_Hero_Media_focalX_operator
-  focalY: Page_Hero_Media_focalY_operator
-  id: Page_Hero_Media_id_operator
-  AND: [Page_Hero_Media_where_and]
-  OR: [Page_Hero_Media_where_or]
-}
-
-input Page_Hero_Media_where_or {
-  alt: Page_Hero_Media_alt_operator
-  caption: Page_Hero_Media_caption_operator
-  updatedAt: Page_Hero_Media_updatedAt_operator
-  createdAt: Page_Hero_Media_createdAt_operator
-  url: Page_Hero_Media_url_operator
-  filename: Page_Hero_Media_filename_operator
-  mimeType: Page_Hero_Media_mimeType_operator
-  filesize: Page_Hero_Media_filesize_operator
-  width: Page_Hero_Media_width_operator
-  height: Page_Hero_Media_height_operator
-  focalX: Page_Hero_Media_focalX_operator
-  focalY: Page_Hero_Media_focalY_operator
-  id: Page_Hero_Media_id_operator
-  AND: [Page_Hero_Media_where_and]
-  OR: [Page_Hero_Media_where_or]
-}
-
-union Page_Layout = Cta | Content | MediaBlock | Archive
+union Page_Layout = Cta | Content | MediaBlock | Archive | ProductsSlider
 
 type Cta {
   invertBackground: Boolean
@@ -537,6 +82,11 @@ type Cta {
   blockName: String
   blockType: String
 }
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
 
 type Cta_Links {
   link: Cta_Links_Link
@@ -568,6 +118,27 @@ enum Cta_Links_Link_Reference_RelationTo {
 }
 
 union Cta_Links_Link_Reference = Page
+
+type Media {
+  id: String
+  alt: String!
+  caption(depth: Int): JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 input Cta_Links_Link_Icon_where {
   alt: Cta_Links_Link_Icon_alt_operator
@@ -1255,7 +826,6 @@ union Archive_SelectedDocs = Product
 type Product {
   id: String
   title: String
-  publishedOn: DateTime
   layout: [Product_Layout!]
   stripeProductID: String
   priceJSON: String
@@ -1274,8 +844,9 @@ type Product {
   ean: String
   description: String
   keywords: String
+  bestseller: Boolean
   mediaVideo: [Product_MediaVideo!]
-  mediaMmages: [Product_MediaMmages!]
+  mediaImages: [Product_MediaImages!]
   categories: [ProductCategory!]
   manufacturer: Manufacturer
   warehouse: Warehouse
@@ -1297,8 +868,9 @@ type Product_MediaVideo {
   id: String
 }
 
-type Product_MediaMmages {
+type Product_MediaImages {
   url: String
+  isMain: Boolean
   id: String
 }
 
@@ -1532,6 +1104,19 @@ enum Archive_PopulatedDocs_RelationTo {
 
 union Archive_PopulatedDocs = Product
 
+type ProductsSlider {
+  ProductsCount: Float
+  ListType: ProductsSlider_ListType
+  id: String
+  blockName: String
+  blockType: String
+}
+
+enum ProductsSlider_ListType {
+  Bestsellers
+  Recent
+}
+
 type Page_Meta {
   title: String
   description: String
@@ -1748,17 +1333,6 @@ type Pages {
 input Page_where {
   title: Page_title_operator
   publishedOn: Page_publishedOn_operator
-  hero__type: Page_hero__type_operator
-  hero__richText: Page_hero__richText_operator
-  hero__links__link__type: Page_hero__links__link__type_operator
-  hero__links__link__newTab: Page_hero__links__link__newTab_operator
-  hero__links__link__reference: Page_hero__links__link__reference_Relation
-  hero__links__link__url: Page_hero__links__link__url_operator
-  hero__links__link__label: Page_hero__links__link__label_operator
-  hero__links__link__icon: Page_hero__links__link__icon_operator
-  hero__links__link__appearance: Page_hero__links__link__appearance_operator
-  hero__links__id: Page_hero__links__id_operator
-  hero__media: Page_hero__media_operator
   slug: Page_slug_operator
   meta__title: Page_meta__title_operator
   meta__description: Page_meta__description_operator
@@ -1790,114 +1364,6 @@ input Page_publishedOn_operator {
   less_than: DateTime
   like: DateTime
   exists: Boolean
-}
-
-input Page_hero__type_operator {
-  equals: Page_hero__type_Input
-  not_equals: Page_hero__type_Input
-  in: [Page_hero__type_Input]
-  not_in: [Page_hero__type_Input]
-  all: [Page_hero__type_Input]
-}
-
-enum Page_hero__type_Input {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-input Page_hero__richText_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-}
-
-input Page_hero__links__link__type_operator {
-  equals: Page_hero__links__link__type_Input
-  not_equals: Page_hero__links__link__type_Input
-  like: Page_hero__links__link__type_Input
-  contains: Page_hero__links__link__type_Input
-  exists: Boolean
-}
-
-enum Page_hero__links__link__type_Input {
-  reference
-  custom
-}
-
-input Page_hero__links__link__newTab_operator {
-  equals: Boolean
-  not_equals: Boolean
-  exists: Boolean
-}
-
-input Page_hero__links__link__reference_Relation {
-  relationTo: Page_hero__links__link__reference_Relation_RelationTo
-  value: JSON
-}
-
-enum Page_hero__links__link__reference_Relation_RelationTo {
-  pages
-}
-
-input Page_hero__links__link__url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Page_hero__links__link__label_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input Page_hero__links__link__icon_operator {
-  equals: String
-  not_equals: String
-  exists: Boolean
-}
-
-input Page_hero__links__link__appearance_operator {
-  equals: Page_hero__links__link__appearance_Input
-  not_equals: Page_hero__links__link__appearance_Input
-  in: [Page_hero__links__link__appearance_Input]
-  not_in: [Page_hero__links__link__appearance_Input]
-  all: [Page_hero__links__link__appearance_Input]
-  exists: Boolean
-}
-
-enum Page_hero__links__link__appearance_Input {
-  default
-  primary
-  secondary
-}
-
-input Page_hero__links__id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Page_hero__media_operator {
-  equals: String
-  not_equals: String
 }
 
 input Page_slug_operator {
@@ -1986,17 +1452,6 @@ input Page_id_operator {
 input Page_where_and {
   title: Page_title_operator
   publishedOn: Page_publishedOn_operator
-  hero__type: Page_hero__type_operator
-  hero__richText: Page_hero__richText_operator
-  hero__links__link__type: Page_hero__links__link__type_operator
-  hero__links__link__newTab: Page_hero__links__link__newTab_operator
-  hero__links__link__reference: Page_hero__links__link__reference_Relation
-  hero__links__link__url: Page_hero__links__link__url_operator
-  hero__links__link__label: Page_hero__links__link__label_operator
-  hero__links__link__icon: Page_hero__links__link__icon_operator
-  hero__links__link__appearance: Page_hero__links__link__appearance_operator
-  hero__links__id: Page_hero__links__id_operator
-  hero__media: Page_hero__media_operator
   slug: Page_slug_operator
   meta__title: Page_meta__title_operator
   meta__description: Page_meta__description_operator
@@ -2012,17 +1467,6 @@ input Page_where_and {
 input Page_where_or {
   title: Page_title_operator
   publishedOn: Page_publishedOn_operator
-  hero__type: Page_hero__type_operator
-  hero__richText: Page_hero__richText_operator
-  hero__links__link__type: Page_hero__links__link__type_operator
-  hero__links__link__newTab: Page_hero__links__link__newTab_operator
-  hero__links__link__reference: Page_hero__links__link__reference_Relation
-  hero__links__link__url: Page_hero__links__link__url_operator
-  hero__links__link__label: Page_hero__links__link__label_operator
-  hero__links__link__icon: Page_hero__links__link__icon_operator
-  hero__links__link__appearance: Page_hero__links__link__appearance_operator
-  hero__links__id: Page_hero__links__id_operator
-  hero__media: Page_hero__media_operator
   slug: Page_slug_operator
   meta__title: Page_meta__title_operator
   meta__description: Page_meta__description_operator
@@ -2050,9 +1494,8 @@ type pagesDocAccess {
 
 type PagesDocAccessFields {
   title: PagesDocAccessFields_title
-  publishedOn: PagesDocAccessFields_publishedOn
-  hero: PagesDocAccessFields_hero
   layout: PagesDocAccessFields_layout
+  publishedOn: PagesDocAccessFields_publishedOn
   slug: PagesDocAccessFields_slug
   meta: PagesDocAccessFields_meta
   updatedAt: PagesDocAccessFields_updatedAt
@@ -2083,376 +1526,6 @@ type PagesDocAccessFields_title_Delete {
   permission: Boolean!
 }
 
-type PagesDocAccessFields_publishedOn {
-  create: PagesDocAccessFields_publishedOn_Create
-  read: PagesDocAccessFields_publishedOn_Read
-  update: PagesDocAccessFields_publishedOn_Update
-  delete: PagesDocAccessFields_publishedOn_Delete
-}
-
-type PagesDocAccessFields_publishedOn_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_publishedOn_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_publishedOn_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_publishedOn_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero {
-  create: PagesDocAccessFields_hero_Create
-  read: PagesDocAccessFields_hero_Read
-  update: PagesDocAccessFields_hero_Update
-  delete: PagesDocAccessFields_hero_Delete
-  fields: PagesDocAccessFields_hero_Fields
-}
-
-type PagesDocAccessFields_hero_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_Fields {
-  type: PagesDocAccessFields_hero_type
-  richText: PagesDocAccessFields_hero_richText
-  links: PagesDocAccessFields_hero_links
-  media: PagesDocAccessFields_hero_media
-}
-
-type PagesDocAccessFields_hero_type {
-  create: PagesDocAccessFields_hero_type_Create
-  read: PagesDocAccessFields_hero_type_Read
-  update: PagesDocAccessFields_hero_type_Update
-  delete: PagesDocAccessFields_hero_type_Delete
-}
-
-type PagesDocAccessFields_hero_type_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_type_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_type_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_type_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_richText {
-  create: PagesDocAccessFields_hero_richText_Create
-  read: PagesDocAccessFields_hero_richText_Read
-  update: PagesDocAccessFields_hero_richText_Update
-  delete: PagesDocAccessFields_hero_richText_Delete
-}
-
-type PagesDocAccessFields_hero_richText_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_richText_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_richText_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_richText_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links {
-  create: PagesDocAccessFields_hero_links_Create
-  read: PagesDocAccessFields_hero_links_Read
-  update: PagesDocAccessFields_hero_links_Update
-  delete: PagesDocAccessFields_hero_links_Delete
-  fields: PagesDocAccessFields_hero_links_Fields
-}
-
-type PagesDocAccessFields_hero_links_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_Fields {
-  link: PagesDocAccessFields_hero_links_link
-  id: PagesDocAccessFields_hero_links_id
-}
-
-type PagesDocAccessFields_hero_links_link {
-  create: PagesDocAccessFields_hero_links_link_Create
-  read: PagesDocAccessFields_hero_links_link_Read
-  update: PagesDocAccessFields_hero_links_link_Update
-  delete: PagesDocAccessFields_hero_links_link_Delete
-  fields: PagesDocAccessFields_hero_links_link_Fields
-}
-
-type PagesDocAccessFields_hero_links_link_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_Fields {
-  type: PagesDocAccessFields_hero_links_link_type
-  newTab: PagesDocAccessFields_hero_links_link_newTab
-  reference: PagesDocAccessFields_hero_links_link_reference
-  url: PagesDocAccessFields_hero_links_link_url
-  label: PagesDocAccessFields_hero_links_link_label
-  icon: PagesDocAccessFields_hero_links_link_icon
-  appearance: PagesDocAccessFields_hero_links_link_appearance
-}
-
-type PagesDocAccessFields_hero_links_link_type {
-  create: PagesDocAccessFields_hero_links_link_type_Create
-  read: PagesDocAccessFields_hero_links_link_type_Read
-  update: PagesDocAccessFields_hero_links_link_type_Update
-  delete: PagesDocAccessFields_hero_links_link_type_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_type_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_type_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_type_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_type_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_newTab {
-  create: PagesDocAccessFields_hero_links_link_newTab_Create
-  read: PagesDocAccessFields_hero_links_link_newTab_Read
-  update: PagesDocAccessFields_hero_links_link_newTab_Update
-  delete: PagesDocAccessFields_hero_links_link_newTab_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_newTab_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_newTab_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_newTab_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_newTab_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_reference {
-  create: PagesDocAccessFields_hero_links_link_reference_Create
-  read: PagesDocAccessFields_hero_links_link_reference_Read
-  update: PagesDocAccessFields_hero_links_link_reference_Update
-  delete: PagesDocAccessFields_hero_links_link_reference_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_reference_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_reference_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_reference_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_reference_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_url {
-  create: PagesDocAccessFields_hero_links_link_url_Create
-  read: PagesDocAccessFields_hero_links_link_url_Read
-  update: PagesDocAccessFields_hero_links_link_url_Update
-  delete: PagesDocAccessFields_hero_links_link_url_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_url_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_url_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_url_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_url_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_label {
-  create: PagesDocAccessFields_hero_links_link_label_Create
-  read: PagesDocAccessFields_hero_links_link_label_Read
-  update: PagesDocAccessFields_hero_links_link_label_Update
-  delete: PagesDocAccessFields_hero_links_link_label_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_label_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_label_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_label_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_label_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_icon {
-  create: PagesDocAccessFields_hero_links_link_icon_Create
-  read: PagesDocAccessFields_hero_links_link_icon_Read
-  update: PagesDocAccessFields_hero_links_link_icon_Update
-  delete: PagesDocAccessFields_hero_links_link_icon_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_icon_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_icon_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_icon_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_icon_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_appearance {
-  create: PagesDocAccessFields_hero_links_link_appearance_Create
-  read: PagesDocAccessFields_hero_links_link_appearance_Read
-  update: PagesDocAccessFields_hero_links_link_appearance_Update
-  delete: PagesDocAccessFields_hero_links_link_appearance_Delete
-}
-
-type PagesDocAccessFields_hero_links_link_appearance_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_appearance_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_appearance_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_link_appearance_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_id {
-  create: PagesDocAccessFields_hero_links_id_Create
-  read: PagesDocAccessFields_hero_links_id_Read
-  update: PagesDocAccessFields_hero_links_id_Update
-  delete: PagesDocAccessFields_hero_links_id_Delete
-}
-
-type PagesDocAccessFields_hero_links_id_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_id_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_id_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_links_id_Delete {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_media {
-  create: PagesDocAccessFields_hero_media_Create
-  read: PagesDocAccessFields_hero_media_Read
-  update: PagesDocAccessFields_hero_media_Update
-  delete: PagesDocAccessFields_hero_media_Delete
-}
-
-type PagesDocAccessFields_hero_media_Create {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_media_Read {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_media_Update {
-  permission: Boolean!
-}
-
-type PagesDocAccessFields_hero_media_Delete {
-  permission: Boolean!
-}
-
 type PagesDocAccessFields_layout {
   create: PagesDocAccessFields_layout_Create
   read: PagesDocAccessFields_layout_Read
@@ -2473,6 +1546,29 @@ type PagesDocAccessFields_layout_Update {
 }
 
 type PagesDocAccessFields_layout_Delete {
+  permission: Boolean!
+}
+
+type PagesDocAccessFields_publishedOn {
+  create: PagesDocAccessFields_publishedOn_Create
+  read: PagesDocAccessFields_publishedOn_Read
+  update: PagesDocAccessFields_publishedOn_Update
+  delete: PagesDocAccessFields_publishedOn_Delete
+}
+
+type PagesDocAccessFields_publishedOn_Create {
+  permission: Boolean!
+}
+
+type PagesDocAccessFields_publishedOn_Read {
+  permission: Boolean!
+}
+
+type PagesDocAccessFields_publishedOn_Update {
+  permission: Boolean!
+}
+
+type PagesDocAccessFields_publishedOn_Delete {
   permission: Boolean!
 }
 
@@ -2708,9 +1804,8 @@ type PageVersion {
 
 type PageVersion_Version {
   title: String
-  publishedOn: DateTime
-  hero: PageVersion_Version_Hero
   layout: [PageVersion_Version_Layout!]!
+  publishedOn: DateTime
   slug: String
   meta: PageVersion_Version_Meta
   updatedAt: DateTime
@@ -2718,435 +1813,7 @@ type PageVersion_Version {
   _status: PageVersion_Version__status
 }
 
-type PageVersion_Version_Hero {
-  type: PageVersion_Version_Hero_type
-  richText(depth: Int): JSON
-  links: [PageVersion_Version_Hero_Links!]
-  media(where: PageVersion_Version_Hero_Media_where): Media
-}
-
-enum PageVersion_Version_Hero_type {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-type PageVersion_Version_Hero_Links {
-  link: PageVersion_Version_Hero_Links_Link
-  id: String
-}
-
-type PageVersion_Version_Hero_Links_Link {
-  type: PageVersion_Version_Hero_Links_Link_type
-  newTab: Boolean
-  reference(draft: Boolean): PageVersion_Version_Hero_Links_Link_Reference_Relationship
-  url: String
-  label: String
-  icon(where: PageVersion_Version_Hero_Links_Link_Icon_where): Media
-  appearance: PageVersion_Version_Hero_Links_Link_appearance
-}
-
-enum PageVersion_Version_Hero_Links_Link_type {
-  reference
-  custom
-}
-
-type PageVersion_Version_Hero_Links_Link_Reference_Relationship {
-  relationTo: PageVersion_Version_Hero_Links_Link_Reference_RelationTo
-  value: PageVersion_Version_Hero_Links_Link_Reference
-}
-
-enum PageVersion_Version_Hero_Links_Link_Reference_RelationTo {
-  pages
-}
-
-union PageVersion_Version_Hero_Links_Link_Reference = Page
-
-input PageVersion_Version_Hero_Links_Link_Icon_where {
-  alt: PageVersion_Version_Hero_Links_Link_Icon_alt_operator
-  caption: PageVersion_Version_Hero_Links_Link_Icon_caption_operator
-  updatedAt: PageVersion_Version_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Links_Link_Icon_createdAt_operator
-  url: PageVersion_Version_Hero_Links_Link_Icon_url_operator
-  filename: PageVersion_Version_Hero_Links_Link_Icon_filename_operator
-  mimeType: PageVersion_Version_Hero_Links_Link_Icon_mimeType_operator
-  filesize: PageVersion_Version_Hero_Links_Link_Icon_filesize_operator
-  width: PageVersion_Version_Hero_Links_Link_Icon_width_operator
-  height: PageVersion_Version_Hero_Links_Link_Icon_height_operator
-  focalX: PageVersion_Version_Hero_Links_Link_Icon_focalX_operator
-  focalY: PageVersion_Version_Hero_Links_Link_Icon_focalY_operator
-  id: PageVersion_Version_Hero_Links_Link_Icon_id_operator
-  AND: [PageVersion_Version_Hero_Links_Link_Icon_where_and]
-  OR: [PageVersion_Version_Hero_Links_Link_Icon_where_or]
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_alt_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_caption_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_where_and {
-  alt: PageVersion_Version_Hero_Links_Link_Icon_alt_operator
-  caption: PageVersion_Version_Hero_Links_Link_Icon_caption_operator
-  updatedAt: PageVersion_Version_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Links_Link_Icon_createdAt_operator
-  url: PageVersion_Version_Hero_Links_Link_Icon_url_operator
-  filename: PageVersion_Version_Hero_Links_Link_Icon_filename_operator
-  mimeType: PageVersion_Version_Hero_Links_Link_Icon_mimeType_operator
-  filesize: PageVersion_Version_Hero_Links_Link_Icon_filesize_operator
-  width: PageVersion_Version_Hero_Links_Link_Icon_width_operator
-  height: PageVersion_Version_Hero_Links_Link_Icon_height_operator
-  focalX: PageVersion_Version_Hero_Links_Link_Icon_focalX_operator
-  focalY: PageVersion_Version_Hero_Links_Link_Icon_focalY_operator
-  id: PageVersion_Version_Hero_Links_Link_Icon_id_operator
-  AND: [PageVersion_Version_Hero_Links_Link_Icon_where_and]
-  OR: [PageVersion_Version_Hero_Links_Link_Icon_where_or]
-}
-
-input PageVersion_Version_Hero_Links_Link_Icon_where_or {
-  alt: PageVersion_Version_Hero_Links_Link_Icon_alt_operator
-  caption: PageVersion_Version_Hero_Links_Link_Icon_caption_operator
-  updatedAt: PageVersion_Version_Hero_Links_Link_Icon_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Links_Link_Icon_createdAt_operator
-  url: PageVersion_Version_Hero_Links_Link_Icon_url_operator
-  filename: PageVersion_Version_Hero_Links_Link_Icon_filename_operator
-  mimeType: PageVersion_Version_Hero_Links_Link_Icon_mimeType_operator
-  filesize: PageVersion_Version_Hero_Links_Link_Icon_filesize_operator
-  width: PageVersion_Version_Hero_Links_Link_Icon_width_operator
-  height: PageVersion_Version_Hero_Links_Link_Icon_height_operator
-  focalX: PageVersion_Version_Hero_Links_Link_Icon_focalX_operator
-  focalY: PageVersion_Version_Hero_Links_Link_Icon_focalY_operator
-  id: PageVersion_Version_Hero_Links_Link_Icon_id_operator
-  AND: [PageVersion_Version_Hero_Links_Link_Icon_where_and]
-  OR: [PageVersion_Version_Hero_Links_Link_Icon_where_or]
-}
-
-enum PageVersion_Version_Hero_Links_Link_appearance {
-  default
-  primary
-  secondary
-}
-
-input PageVersion_Version_Hero_Media_where {
-  alt: PageVersion_Version_Hero_Media_alt_operator
-  caption: PageVersion_Version_Hero_Media_caption_operator
-  updatedAt: PageVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Media_createdAt_operator
-  url: PageVersion_Version_Hero_Media_url_operator
-  filename: PageVersion_Version_Hero_Media_filename_operator
-  mimeType: PageVersion_Version_Hero_Media_mimeType_operator
-  filesize: PageVersion_Version_Hero_Media_filesize_operator
-  width: PageVersion_Version_Hero_Media_width_operator
-  height: PageVersion_Version_Hero_Media_height_operator
-  focalX: PageVersion_Version_Hero_Media_focalX_operator
-  focalY: PageVersion_Version_Hero_Media_focalY_operator
-  id: PageVersion_Version_Hero_Media_id_operator
-  AND: [PageVersion_Version_Hero_Media_where_and]
-  OR: [PageVersion_Version_Hero_Media_where_or]
-}
-
-input PageVersion_Version_Hero_Media_alt_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input PageVersion_Version_Hero_Media_caption_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input PageVersion_Version_Hero_Media_where_and {
-  alt: PageVersion_Version_Hero_Media_alt_operator
-  caption: PageVersion_Version_Hero_Media_caption_operator
-  updatedAt: PageVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Media_createdAt_operator
-  url: PageVersion_Version_Hero_Media_url_operator
-  filename: PageVersion_Version_Hero_Media_filename_operator
-  mimeType: PageVersion_Version_Hero_Media_mimeType_operator
-  filesize: PageVersion_Version_Hero_Media_filesize_operator
-  width: PageVersion_Version_Hero_Media_width_operator
-  height: PageVersion_Version_Hero_Media_height_operator
-  focalX: PageVersion_Version_Hero_Media_focalX_operator
-  focalY: PageVersion_Version_Hero_Media_focalY_operator
-  id: PageVersion_Version_Hero_Media_id_operator
-  AND: [PageVersion_Version_Hero_Media_where_and]
-  OR: [PageVersion_Version_Hero_Media_where_or]
-}
-
-input PageVersion_Version_Hero_Media_where_or {
-  alt: PageVersion_Version_Hero_Media_alt_operator
-  caption: PageVersion_Version_Hero_Media_caption_operator
-  updatedAt: PageVersion_Version_Hero_Media_updatedAt_operator
-  createdAt: PageVersion_Version_Hero_Media_createdAt_operator
-  url: PageVersion_Version_Hero_Media_url_operator
-  filename: PageVersion_Version_Hero_Media_filename_operator
-  mimeType: PageVersion_Version_Hero_Media_mimeType_operator
-  filesize: PageVersion_Version_Hero_Media_filesize_operator
-  width: PageVersion_Version_Hero_Media_width_operator
-  height: PageVersion_Version_Hero_Media_height_operator
-  focalX: PageVersion_Version_Hero_Media_focalX_operator
-  focalY: PageVersion_Version_Hero_Media_focalY_operator
-  id: PageVersion_Version_Hero_Media_id_operator
-  AND: [PageVersion_Version_Hero_Media_where_and]
-  OR: [PageVersion_Version_Hero_Media_where_or]
-}
-
-union PageVersion_Version_Layout = Cta | Content | MediaBlock | Archive
+union PageVersion_Version_Layout = Cta | Content | MediaBlock | Archive | ProductsSlider
 
 type PageVersion_Version_Meta {
   title: String
@@ -3365,17 +2032,6 @@ input versionsPage_where {
   parent: versionsPage_parent_operator
   version__title: versionsPage_version__title_operator
   version__publishedOn: versionsPage_version__publishedOn_operator
-  version__hero__type: versionsPage_version__hero__type_operator
-  version__hero__richText: versionsPage_version__hero__richText_operator
-  version__hero__links__link__type: versionsPage_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsPage_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsPage_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsPage_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsPage_version__hero__links__link__label_operator
-  version__hero__links__link__icon: versionsPage_version__hero__links__link__icon_operator
-  version__hero__links__link__appearance: versionsPage_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsPage_version__hero__links__id_operator
-  version__hero__media: versionsPage_version__hero__media_operator
   version__slug: versionsPage_version__slug_operator
   version__meta__title: versionsPage_version__meta__title_operator
   version__meta__description: versionsPage_version__meta__description_operator
@@ -3419,114 +2075,6 @@ input versionsPage_version__publishedOn_operator {
   less_than: DateTime
   like: DateTime
   exists: Boolean
-}
-
-input versionsPage_version__hero__type_operator {
-  equals: versionsPage_version__hero__type_Input
-  not_equals: versionsPage_version__hero__type_Input
-  in: [versionsPage_version__hero__type_Input]
-  not_in: [versionsPage_version__hero__type_Input]
-  all: [versionsPage_version__hero__type_Input]
-}
-
-enum versionsPage_version__hero__type_Input {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-input versionsPage_version__hero__richText_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-}
-
-input versionsPage_version__hero__links__link__type_operator {
-  equals: versionsPage_version__hero__links__link__type_Input
-  not_equals: versionsPage_version__hero__links__link__type_Input
-  like: versionsPage_version__hero__links__link__type_Input
-  contains: versionsPage_version__hero__links__link__type_Input
-  exists: Boolean
-}
-
-enum versionsPage_version__hero__links__link__type_Input {
-  reference
-  custom
-}
-
-input versionsPage_version__hero__links__link__newTab_operator {
-  equals: Boolean
-  not_equals: Boolean
-  exists: Boolean
-}
-
-input versionsPage_version__hero__links__link__reference_Relation {
-  relationTo: versionsPage_version__hero__links__link__reference_Relation_RelationTo
-  value: JSON
-}
-
-enum versionsPage_version__hero__links__link__reference_Relation_RelationTo {
-  pages
-}
-
-input versionsPage_version__hero__links__link__url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input versionsPage_version__hero__links__link__label_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input versionsPage_version__hero__links__link__icon_operator {
-  equals: String
-  not_equals: String
-  exists: Boolean
-}
-
-input versionsPage_version__hero__links__link__appearance_operator {
-  equals: versionsPage_version__hero__links__link__appearance_Input
-  not_equals: versionsPage_version__hero__links__link__appearance_Input
-  in: [versionsPage_version__hero__links__link__appearance_Input]
-  not_in: [versionsPage_version__hero__links__link__appearance_Input]
-  all: [versionsPage_version__hero__links__link__appearance_Input]
-  exists: Boolean
-}
-
-enum versionsPage_version__hero__links__link__appearance_Input {
-  default
-  primary
-  secondary
-}
-
-input versionsPage_version__hero__links__id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input versionsPage_version__hero__media_operator {
-  equals: String
-  not_equals: String
 }
 
 input versionsPage_version__slug_operator {
@@ -3644,17 +2192,6 @@ input versionsPage_where_and {
   parent: versionsPage_parent_operator
   version__title: versionsPage_version__title_operator
   version__publishedOn: versionsPage_version__publishedOn_operator
-  version__hero__type: versionsPage_version__hero__type_operator
-  version__hero__richText: versionsPage_version__hero__richText_operator
-  version__hero__links__link__type: versionsPage_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsPage_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsPage_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsPage_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsPage_version__hero__links__link__label_operator
-  version__hero__links__link__icon: versionsPage_version__hero__links__link__icon_operator
-  version__hero__links__link__appearance: versionsPage_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsPage_version__hero__links__id_operator
-  version__hero__media: versionsPage_version__hero__media_operator
   version__slug: versionsPage_version__slug_operator
   version__meta__title: versionsPage_version__meta__title_operator
   version__meta__description: versionsPage_version__meta__description_operator
@@ -3674,17 +2211,6 @@ input versionsPage_where_or {
   parent: versionsPage_parent_operator
   version__title: versionsPage_version__title_operator
   version__publishedOn: versionsPage_version__publishedOn_operator
-  version__hero__type: versionsPage_version__hero__type_operator
-  version__hero__richText: versionsPage_version__hero__richText_operator
-  version__hero__links__link__type: versionsPage_version__hero__links__link__type_operator
-  version__hero__links__link__newTab: versionsPage_version__hero__links__link__newTab_operator
-  version__hero__links__link__reference: versionsPage_version__hero__links__link__reference_Relation
-  version__hero__links__link__url: versionsPage_version__hero__links__link__url_operator
-  version__hero__links__link__label: versionsPage_version__hero__links__link__label_operator
-  version__hero__links__link__icon: versionsPage_version__hero__links__link__icon_operator
-  version__hero__links__link__appearance: versionsPage_version__hero__links__link__appearance_operator
-  version__hero__links__id: versionsPage_version__hero__links__id_operator
-  version__hero__media: versionsPage_version__hero__media_operator
   version__slug: versionsPage_version__slug_operator
   version__meta__title: versionsPage_version__meta__title_operator
   version__meta__description: versionsPage_version__meta__description_operator
@@ -3716,7 +2242,6 @@ type Products {
 
 input Product_where {
   title: Product_title_operator
-  publishedOn: Product_publishedOn_operator
   stripeProductID: Product_stripeProductID_operator
   priceJSON: Product_priceJSON_operator
   enablePaywall: Product_enablePaywall_operator
@@ -3733,10 +2258,12 @@ input Product_where {
   ean: Product_ean_operator
   description: Product_description_operator
   keywords: Product_keywords_operator
+  bestseller: Product_bestseller_operator
   mediaVideo__url: Product_mediaVideo__url_operator
   mediaVideo__id: Product_mediaVideo__id_operator
-  mediaMmages__url: Product_mediaMmages__url_operator
-  mediaMmages__id: Product_mediaMmages__id_operator
+  mediaImages__url: Product_mediaImages__url_operator
+  mediaImages__isMain: Product_mediaImages__isMain_operator
+  mediaImages__id: Product_mediaImages__id_operator
   categories: Product_categories_operator
   manufacturer: Product_manufacturer_operator
   warehouse: Product_warehouse_operator
@@ -3762,17 +2289,6 @@ input Product_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
-}
-
-input Product_publishedOn_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
 }
 
 input Product_stripeProductID_operator {
@@ -3933,6 +2449,12 @@ input Product_keywords_operator {
   exists: Boolean
 }
 
+input Product_bestseller_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
 input Product_mediaVideo__url_operator {
   equals: String
   not_equals: String
@@ -3955,7 +2477,7 @@ input Product_mediaVideo__id_operator {
   exists: Boolean
 }
 
-input Product_mediaMmages__url_operator {
+input Product_mediaImages__url_operator {
   equals: String
   not_equals: String
   like: String
@@ -3966,7 +2488,13 @@ input Product_mediaMmages__url_operator {
   exists: Boolean
 }
 
-input Product_mediaMmages__id_operator {
+input Product_mediaImages__isMain_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Product_mediaImages__id_operator {
   equals: String
   not_equals: String
   like: String
@@ -4104,7 +2632,6 @@ input Product_id_operator {
 
 input Product_where_and {
   title: Product_title_operator
-  publishedOn: Product_publishedOn_operator
   stripeProductID: Product_stripeProductID_operator
   priceJSON: Product_priceJSON_operator
   enablePaywall: Product_enablePaywall_operator
@@ -4121,10 +2648,12 @@ input Product_where_and {
   ean: Product_ean_operator
   description: Product_description_operator
   keywords: Product_keywords_operator
+  bestseller: Product_bestseller_operator
   mediaVideo__url: Product_mediaVideo__url_operator
   mediaVideo__id: Product_mediaVideo__id_operator
-  mediaMmages__url: Product_mediaMmages__url_operator
-  mediaMmages__id: Product_mediaMmages__id_operator
+  mediaImages__url: Product_mediaImages__url_operator
+  mediaImages__isMain: Product_mediaImages__isMain_operator
+  mediaImages__id: Product_mediaImages__id_operator
   categories: Product_categories_operator
   manufacturer: Product_manufacturer_operator
   warehouse: Product_warehouse_operator
@@ -4144,7 +2673,6 @@ input Product_where_and {
 
 input Product_where_or {
   title: Product_title_operator
-  publishedOn: Product_publishedOn_operator
   stripeProductID: Product_stripeProductID_operator
   priceJSON: Product_priceJSON_operator
   enablePaywall: Product_enablePaywall_operator
@@ -4161,10 +2689,12 @@ input Product_where_or {
   ean: Product_ean_operator
   description: Product_description_operator
   keywords: Product_keywords_operator
+  bestseller: Product_bestseller_operator
   mediaVideo__url: Product_mediaVideo__url_operator
   mediaVideo__id: Product_mediaVideo__id_operator
-  mediaMmages__url: Product_mediaMmages__url_operator
-  mediaMmages__id: Product_mediaMmages__id_operator
+  mediaImages__url: Product_mediaImages__url_operator
+  mediaImages__isMain: Product_mediaImages__isMain_operator
+  mediaImages__id: Product_mediaImages__id_operator
   categories: Product_categories_operator
   manufacturer: Product_manufacturer_operator
   warehouse: Product_warehouse_operator
@@ -4197,7 +2727,6 @@ type productsDocAccess {
 
 type ProductsDocAccessFields {
   title: ProductsDocAccessFields_title
-  publishedOn: ProductsDocAccessFields_publishedOn
   layout: ProductsDocAccessFields_layout
   stripeProductID: ProductsDocAccessFields_stripeProductID
   priceJSON: ProductsDocAccessFields_priceJSON
@@ -4216,8 +2745,9 @@ type ProductsDocAccessFields {
   ean: ProductsDocAccessFields_ean
   description: ProductsDocAccessFields_description
   keywords: ProductsDocAccessFields_keywords
+  bestseller: ProductsDocAccessFields_bestseller
   mediaVideo: ProductsDocAccessFields_mediaVideo
-  mediaMmages: ProductsDocAccessFields_mediaMmages
+  mediaImages: ProductsDocAccessFields_mediaImages
   categories: ProductsDocAccessFields_categories
   manufacturer: ProductsDocAccessFields_manufacturer
   warehouse: ProductsDocAccessFields_warehouse
@@ -4250,29 +2780,6 @@ type ProductsDocAccessFields_title_Update {
 }
 
 type ProductsDocAccessFields_title_Delete {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_publishedOn {
-  create: ProductsDocAccessFields_publishedOn_Create
-  read: ProductsDocAccessFields_publishedOn_Read
-  update: ProductsDocAccessFields_publishedOn_Update
-  delete: ProductsDocAccessFields_publishedOn_Delete
-}
-
-type ProductsDocAccessFields_publishedOn_Create {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_publishedOn_Read {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_publishedOn_Update {
-  permission: Boolean!
-}
-
-type ProductsDocAccessFields_publishedOn_Delete {
   permission: Boolean!
 }
 
@@ -4690,6 +3197,29 @@ type ProductsDocAccessFields_keywords_Delete {
   permission: Boolean!
 }
 
+type ProductsDocAccessFields_bestseller {
+  create: ProductsDocAccessFields_bestseller_Create
+  read: ProductsDocAccessFields_bestseller_Read
+  update: ProductsDocAccessFields_bestseller_Update
+  delete: ProductsDocAccessFields_bestseller_Delete
+}
+
+type ProductsDocAccessFields_bestseller_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_bestseller_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_bestseller_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_bestseller_Delete {
+  permission: Boolean!
+}
+
 type ProductsDocAccessFields_mediaVideo {
   create: ProductsDocAccessFields_mediaVideo_Create
   read: ProductsDocAccessFields_mediaVideo_Read
@@ -4765,78 +3295,102 @@ type ProductsDocAccessFields_mediaVideo_id_Delete {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages {
-  create: ProductsDocAccessFields_mediaMmages_Create
-  read: ProductsDocAccessFields_mediaMmages_Read
-  update: ProductsDocAccessFields_mediaMmages_Update
-  delete: ProductsDocAccessFields_mediaMmages_Delete
-  fields: ProductsDocAccessFields_mediaMmages_Fields
+type ProductsDocAccessFields_mediaImages {
+  create: ProductsDocAccessFields_mediaImages_Create
+  read: ProductsDocAccessFields_mediaImages_Read
+  update: ProductsDocAccessFields_mediaImages_Update
+  delete: ProductsDocAccessFields_mediaImages_Delete
+  fields: ProductsDocAccessFields_mediaImages_Fields
 }
 
-type ProductsDocAccessFields_mediaMmages_Create {
+type ProductsDocAccessFields_mediaImages_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_Read {
+type ProductsDocAccessFields_mediaImages_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_Update {
+type ProductsDocAccessFields_mediaImages_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_Delete {
+type ProductsDocAccessFields_mediaImages_Delete {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_Fields {
-  url: ProductsDocAccessFields_mediaMmages_url
-  id: ProductsDocAccessFields_mediaMmages_id
+type ProductsDocAccessFields_mediaImages_Fields {
+  url: ProductsDocAccessFields_mediaImages_url
+  isMain: ProductsDocAccessFields_mediaImages_isMain
+  id: ProductsDocAccessFields_mediaImages_id
 }
 
-type ProductsDocAccessFields_mediaMmages_url {
-  create: ProductsDocAccessFields_mediaMmages_url_Create
-  read: ProductsDocAccessFields_mediaMmages_url_Read
-  update: ProductsDocAccessFields_mediaMmages_url_Update
-  delete: ProductsDocAccessFields_mediaMmages_url_Delete
+type ProductsDocAccessFields_mediaImages_url {
+  create: ProductsDocAccessFields_mediaImages_url_Create
+  read: ProductsDocAccessFields_mediaImages_url_Read
+  update: ProductsDocAccessFields_mediaImages_url_Update
+  delete: ProductsDocAccessFields_mediaImages_url_Delete
 }
 
-type ProductsDocAccessFields_mediaMmages_url_Create {
+type ProductsDocAccessFields_mediaImages_url_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_url_Read {
+type ProductsDocAccessFields_mediaImages_url_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_url_Update {
+type ProductsDocAccessFields_mediaImages_url_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_url_Delete {
+type ProductsDocAccessFields_mediaImages_url_Delete {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_id {
-  create: ProductsDocAccessFields_mediaMmages_id_Create
-  read: ProductsDocAccessFields_mediaMmages_id_Read
-  update: ProductsDocAccessFields_mediaMmages_id_Update
-  delete: ProductsDocAccessFields_mediaMmages_id_Delete
+type ProductsDocAccessFields_mediaImages_isMain {
+  create: ProductsDocAccessFields_mediaImages_isMain_Create
+  read: ProductsDocAccessFields_mediaImages_isMain_Read
+  update: ProductsDocAccessFields_mediaImages_isMain_Update
+  delete: ProductsDocAccessFields_mediaImages_isMain_Delete
 }
 
-type ProductsDocAccessFields_mediaMmages_id_Create {
+type ProductsDocAccessFields_mediaImages_isMain_Create {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_id_Read {
+type ProductsDocAccessFields_mediaImages_isMain_Read {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_id_Update {
+type ProductsDocAccessFields_mediaImages_isMain_Update {
   permission: Boolean!
 }
 
-type ProductsDocAccessFields_mediaMmages_id_Delete {
+type ProductsDocAccessFields_mediaImages_isMain_Delete {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_mediaImages_id {
+  create: ProductsDocAccessFields_mediaImages_id_Create
+  read: ProductsDocAccessFields_mediaImages_id_Read
+  update: ProductsDocAccessFields_mediaImages_id_Update
+  delete: ProductsDocAccessFields_mediaImages_id_Delete
+}
+
+type ProductsDocAccessFields_mediaImages_id_Create {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_mediaImages_id_Read {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_mediaImages_id_Update {
+  permission: Boolean!
+}
+
+type ProductsDocAccessFields_mediaImages_id_Delete {
   permission: Boolean!
 }
 
@@ -5182,7 +3736,6 @@ type ProductVersion {
 
 type ProductVersion_Version {
   title: String
-  publishedOn: DateTime
   layout: [ProductVersion_Version_Layout!]
   stripeProductID: String
   priceJSON: String
@@ -5201,8 +3754,9 @@ type ProductVersion_Version {
   ean: String
   description: String
   keywords: String
+  bestseller: Boolean
   mediaVideo: [ProductVersion_Version_MediaVideo!]
-  mediaMmages: [ProductVersion_Version_MediaMmages!]
+  mediaImages: [ProductVersion_Version_MediaImages!]
   categories: [ProductCategory!]
   manufacturer: Manufacturer
   warehouse: Warehouse
@@ -5224,8 +3778,9 @@ type ProductVersion_Version_MediaVideo {
   id: String
 }
 
-type ProductVersion_Version_MediaMmages {
+type ProductVersion_Version_MediaImages {
   url: String
+  isMain: Boolean
   id: String
 }
 
@@ -5445,7 +4000,6 @@ type versionsProducts {
 input versionsProduct_where {
   parent: versionsProduct_parent_operator
   version__title: versionsProduct_version__title_operator
-  version__publishedOn: versionsProduct_version__publishedOn_operator
   version__stripeProductID: versionsProduct_version__stripeProductID_operator
   version__priceJSON: versionsProduct_version__priceJSON_operator
   version__enablePaywall: versionsProduct_version__enablePaywall_operator
@@ -5462,10 +4016,12 @@ input versionsProduct_where {
   version__ean: versionsProduct_version__ean_operator
   version__description: versionsProduct_version__description_operator
   version__keywords: versionsProduct_version__keywords_operator
+  version__bestseller: versionsProduct_version__bestseller_operator
   version__mediaVideo__url: versionsProduct_version__mediaVideo__url_operator
   version__mediaVideo__id: versionsProduct_version__mediaVideo__id_operator
-  version__mediaMmages__url: versionsProduct_version__mediaMmages__url_operator
-  version__mediaMmages__id: versionsProduct_version__mediaMmages__id_operator
+  version__mediaImages__url: versionsProduct_version__mediaImages__url_operator
+  version__mediaImages__isMain: versionsProduct_version__mediaImages__isMain_operator
+  version__mediaImages__id: versionsProduct_version__mediaImages__id_operator
   version__categories: versionsProduct_version__categories_operator
   version__manufacturer: versionsProduct_version__manufacturer_operator
   version__warehouse: versionsProduct_version__warehouse_operator
@@ -5503,17 +4059,6 @@ input versionsProduct_version__title_operator {
   in: [String]
   not_in: [String]
   all: [String]
-}
-
-input versionsProduct_version__publishedOn_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
 }
 
 input versionsProduct_version__stripeProductID_operator {
@@ -5674,6 +4219,12 @@ input versionsProduct_version__keywords_operator {
   exists: Boolean
 }
 
+input versionsProduct_version__bestseller_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
 input versionsProduct_version__mediaVideo__url_operator {
   equals: String
   not_equals: String
@@ -5696,7 +4247,7 @@ input versionsProduct_version__mediaVideo__id_operator {
   exists: Boolean
 }
 
-input versionsProduct_version__mediaMmages__url_operator {
+input versionsProduct_version__mediaImages__url_operator {
   equals: String
   not_equals: String
   like: String
@@ -5707,7 +4258,13 @@ input versionsProduct_version__mediaMmages__url_operator {
   exists: Boolean
 }
 
-input versionsProduct_version__mediaMmages__id_operator {
+input versionsProduct_version__mediaImages__isMain_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input versionsProduct_version__mediaImages__id_operator {
   equals: String
   not_equals: String
   like: String
@@ -5874,7 +4431,6 @@ input versionsProduct_id_operator {
 input versionsProduct_where_and {
   parent: versionsProduct_parent_operator
   version__title: versionsProduct_version__title_operator
-  version__publishedOn: versionsProduct_version__publishedOn_operator
   version__stripeProductID: versionsProduct_version__stripeProductID_operator
   version__priceJSON: versionsProduct_version__priceJSON_operator
   version__enablePaywall: versionsProduct_version__enablePaywall_operator
@@ -5891,10 +4447,12 @@ input versionsProduct_where_and {
   version__ean: versionsProduct_version__ean_operator
   version__description: versionsProduct_version__description_operator
   version__keywords: versionsProduct_version__keywords_operator
+  version__bestseller: versionsProduct_version__bestseller_operator
   version__mediaVideo__url: versionsProduct_version__mediaVideo__url_operator
   version__mediaVideo__id: versionsProduct_version__mediaVideo__id_operator
-  version__mediaMmages__url: versionsProduct_version__mediaMmages__url_operator
-  version__mediaMmages__id: versionsProduct_version__mediaMmages__id_operator
+  version__mediaImages__url: versionsProduct_version__mediaImages__url_operator
+  version__mediaImages__isMain: versionsProduct_version__mediaImages__isMain_operator
+  version__mediaImages__id: versionsProduct_version__mediaImages__id_operator
   version__categories: versionsProduct_version__categories_operator
   version__manufacturer: versionsProduct_version__manufacturer_operator
   version__warehouse: versionsProduct_version__warehouse_operator
@@ -5918,7 +4476,6 @@ input versionsProduct_where_and {
 input versionsProduct_where_or {
   parent: versionsProduct_parent_operator
   version__title: versionsProduct_version__title_operator
-  version__publishedOn: versionsProduct_version__publishedOn_operator
   version__stripeProductID: versionsProduct_version__stripeProductID_operator
   version__priceJSON: versionsProduct_version__priceJSON_operator
   version__enablePaywall: versionsProduct_version__enablePaywall_operator
@@ -5935,10 +4492,12 @@ input versionsProduct_where_or {
   version__ean: versionsProduct_version__ean_operator
   version__description: versionsProduct_version__description_operator
   version__keywords: versionsProduct_version__keywords_operator
+  version__bestseller: versionsProduct_version__bestseller_operator
   version__mediaVideo__url: versionsProduct_version__mediaVideo__url_operator
   version__mediaVideo__id: versionsProduct_version__mediaVideo__id_operator
-  version__mediaMmages__url: versionsProduct_version__mediaMmages__url_operator
-  version__mediaMmages__id: versionsProduct_version__mediaMmages__id_operator
+  version__mediaImages__url: versionsProduct_version__mediaImages__url_operator
+  version__mediaImages__isMain: versionsProduct_version__mediaImages__isMain_operator
+  version__mediaImages__id: versionsProduct_version__mediaImages__id_operator
   version__categories: versionsProduct_version__categories_operator
   version__manufacturer: versionsProduct_version__manufacturer_operator
   version__warehouse: versionsProduct_version__warehouse_operator
@@ -10666,9 +9225,8 @@ type pagesAccess {
 
 type PagesFields {
   title: PagesFields_title
-  publishedOn: PagesFields_publishedOn
-  hero: PagesFields_hero
   layout: PagesFields_layout
+  publishedOn: PagesFields_publishedOn
   slug: PagesFields_slug
   meta: PagesFields_meta
   updatedAt: PagesFields_updatedAt
@@ -10699,376 +9257,6 @@ type PagesFields_title_Delete {
   permission: Boolean!
 }
 
-type PagesFields_publishedOn {
-  create: PagesFields_publishedOn_Create
-  read: PagesFields_publishedOn_Read
-  update: PagesFields_publishedOn_Update
-  delete: PagesFields_publishedOn_Delete
-}
-
-type PagesFields_publishedOn_Create {
-  permission: Boolean!
-}
-
-type PagesFields_publishedOn_Read {
-  permission: Boolean!
-}
-
-type PagesFields_publishedOn_Update {
-  permission: Boolean!
-}
-
-type PagesFields_publishedOn_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero {
-  create: PagesFields_hero_Create
-  read: PagesFields_hero_Read
-  update: PagesFields_hero_Update
-  delete: PagesFields_hero_Delete
-  fields: PagesFields_hero_Fields
-}
-
-type PagesFields_hero_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_Fields {
-  type: PagesFields_hero_type
-  richText: PagesFields_hero_richText
-  links: PagesFields_hero_links
-  media: PagesFields_hero_media
-}
-
-type PagesFields_hero_type {
-  create: PagesFields_hero_type_Create
-  read: PagesFields_hero_type_Read
-  update: PagesFields_hero_type_Update
-  delete: PagesFields_hero_type_Delete
-}
-
-type PagesFields_hero_type_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_type_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_type_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_type_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_richText {
-  create: PagesFields_hero_richText_Create
-  read: PagesFields_hero_richText_Read
-  update: PagesFields_hero_richText_Update
-  delete: PagesFields_hero_richText_Delete
-}
-
-type PagesFields_hero_richText_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_richText_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_richText_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_richText_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links {
-  create: PagesFields_hero_links_Create
-  read: PagesFields_hero_links_Read
-  update: PagesFields_hero_links_Update
-  delete: PagesFields_hero_links_Delete
-  fields: PagesFields_hero_links_Fields
-}
-
-type PagesFields_hero_links_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_Fields {
-  link: PagesFields_hero_links_link
-  id: PagesFields_hero_links_id
-}
-
-type PagesFields_hero_links_link {
-  create: PagesFields_hero_links_link_Create
-  read: PagesFields_hero_links_link_Read
-  update: PagesFields_hero_links_link_Update
-  delete: PagesFields_hero_links_link_Delete
-  fields: PagesFields_hero_links_link_Fields
-}
-
-type PagesFields_hero_links_link_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_Fields {
-  type: PagesFields_hero_links_link_type
-  newTab: PagesFields_hero_links_link_newTab
-  reference: PagesFields_hero_links_link_reference
-  url: PagesFields_hero_links_link_url
-  label: PagesFields_hero_links_link_label
-  icon: PagesFields_hero_links_link_icon
-  appearance: PagesFields_hero_links_link_appearance
-}
-
-type PagesFields_hero_links_link_type {
-  create: PagesFields_hero_links_link_type_Create
-  read: PagesFields_hero_links_link_type_Read
-  update: PagesFields_hero_links_link_type_Update
-  delete: PagesFields_hero_links_link_type_Delete
-}
-
-type PagesFields_hero_links_link_type_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_type_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_type_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_type_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_newTab {
-  create: PagesFields_hero_links_link_newTab_Create
-  read: PagesFields_hero_links_link_newTab_Read
-  update: PagesFields_hero_links_link_newTab_Update
-  delete: PagesFields_hero_links_link_newTab_Delete
-}
-
-type PagesFields_hero_links_link_newTab_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_newTab_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_newTab_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_newTab_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_reference {
-  create: PagesFields_hero_links_link_reference_Create
-  read: PagesFields_hero_links_link_reference_Read
-  update: PagesFields_hero_links_link_reference_Update
-  delete: PagesFields_hero_links_link_reference_Delete
-}
-
-type PagesFields_hero_links_link_reference_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_reference_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_reference_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_reference_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_url {
-  create: PagesFields_hero_links_link_url_Create
-  read: PagesFields_hero_links_link_url_Read
-  update: PagesFields_hero_links_link_url_Update
-  delete: PagesFields_hero_links_link_url_Delete
-}
-
-type PagesFields_hero_links_link_url_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_url_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_url_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_url_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_label {
-  create: PagesFields_hero_links_link_label_Create
-  read: PagesFields_hero_links_link_label_Read
-  update: PagesFields_hero_links_link_label_Update
-  delete: PagesFields_hero_links_link_label_Delete
-}
-
-type PagesFields_hero_links_link_label_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_label_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_label_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_label_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_icon {
-  create: PagesFields_hero_links_link_icon_Create
-  read: PagesFields_hero_links_link_icon_Read
-  update: PagesFields_hero_links_link_icon_Update
-  delete: PagesFields_hero_links_link_icon_Delete
-}
-
-type PagesFields_hero_links_link_icon_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_icon_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_icon_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_icon_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_appearance {
-  create: PagesFields_hero_links_link_appearance_Create
-  read: PagesFields_hero_links_link_appearance_Read
-  update: PagesFields_hero_links_link_appearance_Update
-  delete: PagesFields_hero_links_link_appearance_Delete
-}
-
-type PagesFields_hero_links_link_appearance_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_appearance_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_appearance_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_link_appearance_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_id {
-  create: PagesFields_hero_links_id_Create
-  read: PagesFields_hero_links_id_Read
-  update: PagesFields_hero_links_id_Update
-  delete: PagesFields_hero_links_id_Delete
-}
-
-type PagesFields_hero_links_id_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_id_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_id_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_links_id_Delete {
-  permission: Boolean!
-}
-
-type PagesFields_hero_media {
-  create: PagesFields_hero_media_Create
-  read: PagesFields_hero_media_Read
-  update: PagesFields_hero_media_Update
-  delete: PagesFields_hero_media_Delete
-}
-
-type PagesFields_hero_media_Create {
-  permission: Boolean!
-}
-
-type PagesFields_hero_media_Read {
-  permission: Boolean!
-}
-
-type PagesFields_hero_media_Update {
-  permission: Boolean!
-}
-
-type PagesFields_hero_media_Delete {
-  permission: Boolean!
-}
-
 type PagesFields_layout {
   create: PagesFields_layout_Create
   read: PagesFields_layout_Read
@@ -11089,6 +9277,29 @@ type PagesFields_layout_Update {
 }
 
 type PagesFields_layout_Delete {
+  permission: Boolean!
+}
+
+type PagesFields_publishedOn {
+  create: PagesFields_publishedOn_Create
+  read: PagesFields_publishedOn_Read
+  update: PagesFields_publishedOn_Update
+  delete: PagesFields_publishedOn_Delete
+}
+
+type PagesFields_publishedOn_Create {
+  permission: Boolean!
+}
+
+type PagesFields_publishedOn_Read {
+  permission: Boolean!
+}
+
+type PagesFields_publishedOn_Update {
+  permission: Boolean!
+}
+
+type PagesFields_publishedOn_Delete {
   permission: Boolean!
 }
 
@@ -11319,7 +9530,6 @@ type productsAccess {
 
 type ProductsFields {
   title: ProductsFields_title
-  publishedOn: ProductsFields_publishedOn
   layout: ProductsFields_layout
   stripeProductID: ProductsFields_stripeProductID
   priceJSON: ProductsFields_priceJSON
@@ -11338,8 +9548,9 @@ type ProductsFields {
   ean: ProductsFields_ean
   description: ProductsFields_description
   keywords: ProductsFields_keywords
+  bestseller: ProductsFields_bestseller
   mediaVideo: ProductsFields_mediaVideo
-  mediaMmages: ProductsFields_mediaMmages
+  mediaImages: ProductsFields_mediaImages
   categories: ProductsFields_categories
   manufacturer: ProductsFields_manufacturer
   warehouse: ProductsFields_warehouse
@@ -11372,29 +9583,6 @@ type ProductsFields_title_Update {
 }
 
 type ProductsFields_title_Delete {
-  permission: Boolean!
-}
-
-type ProductsFields_publishedOn {
-  create: ProductsFields_publishedOn_Create
-  read: ProductsFields_publishedOn_Read
-  update: ProductsFields_publishedOn_Update
-  delete: ProductsFields_publishedOn_Delete
-}
-
-type ProductsFields_publishedOn_Create {
-  permission: Boolean!
-}
-
-type ProductsFields_publishedOn_Read {
-  permission: Boolean!
-}
-
-type ProductsFields_publishedOn_Update {
-  permission: Boolean!
-}
-
-type ProductsFields_publishedOn_Delete {
   permission: Boolean!
 }
 
@@ -11812,6 +10000,29 @@ type ProductsFields_keywords_Delete {
   permission: Boolean!
 }
 
+type ProductsFields_bestseller {
+  create: ProductsFields_bestseller_Create
+  read: ProductsFields_bestseller_Read
+  update: ProductsFields_bestseller_Update
+  delete: ProductsFields_bestseller_Delete
+}
+
+type ProductsFields_bestseller_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_bestseller_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_bestseller_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_bestseller_Delete {
+  permission: Boolean!
+}
+
 type ProductsFields_mediaVideo {
   create: ProductsFields_mediaVideo_Create
   read: ProductsFields_mediaVideo_Read
@@ -11887,78 +10098,102 @@ type ProductsFields_mediaVideo_id_Delete {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages {
-  create: ProductsFields_mediaMmages_Create
-  read: ProductsFields_mediaMmages_Read
-  update: ProductsFields_mediaMmages_Update
-  delete: ProductsFields_mediaMmages_Delete
-  fields: ProductsFields_mediaMmages_Fields
+type ProductsFields_mediaImages {
+  create: ProductsFields_mediaImages_Create
+  read: ProductsFields_mediaImages_Read
+  update: ProductsFields_mediaImages_Update
+  delete: ProductsFields_mediaImages_Delete
+  fields: ProductsFields_mediaImages_Fields
 }
 
-type ProductsFields_mediaMmages_Create {
+type ProductsFields_mediaImages_Create {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_Read {
+type ProductsFields_mediaImages_Read {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_Update {
+type ProductsFields_mediaImages_Update {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_Delete {
+type ProductsFields_mediaImages_Delete {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_Fields {
-  url: ProductsFields_mediaMmages_url
-  id: ProductsFields_mediaMmages_id
+type ProductsFields_mediaImages_Fields {
+  url: ProductsFields_mediaImages_url
+  isMain: ProductsFields_mediaImages_isMain
+  id: ProductsFields_mediaImages_id
 }
 
-type ProductsFields_mediaMmages_url {
-  create: ProductsFields_mediaMmages_url_Create
-  read: ProductsFields_mediaMmages_url_Read
-  update: ProductsFields_mediaMmages_url_Update
-  delete: ProductsFields_mediaMmages_url_Delete
+type ProductsFields_mediaImages_url {
+  create: ProductsFields_mediaImages_url_Create
+  read: ProductsFields_mediaImages_url_Read
+  update: ProductsFields_mediaImages_url_Update
+  delete: ProductsFields_mediaImages_url_Delete
 }
 
-type ProductsFields_mediaMmages_url_Create {
+type ProductsFields_mediaImages_url_Create {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_url_Read {
+type ProductsFields_mediaImages_url_Read {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_url_Update {
+type ProductsFields_mediaImages_url_Update {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_url_Delete {
+type ProductsFields_mediaImages_url_Delete {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_id {
-  create: ProductsFields_mediaMmages_id_Create
-  read: ProductsFields_mediaMmages_id_Read
-  update: ProductsFields_mediaMmages_id_Update
-  delete: ProductsFields_mediaMmages_id_Delete
+type ProductsFields_mediaImages_isMain {
+  create: ProductsFields_mediaImages_isMain_Create
+  read: ProductsFields_mediaImages_isMain_Read
+  update: ProductsFields_mediaImages_isMain_Update
+  delete: ProductsFields_mediaImages_isMain_Delete
 }
 
-type ProductsFields_mediaMmages_id_Create {
+type ProductsFields_mediaImages_isMain_Create {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_id_Read {
+type ProductsFields_mediaImages_isMain_Read {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_id_Update {
+type ProductsFields_mediaImages_isMain_Update {
   permission: Boolean!
 }
 
-type ProductsFields_mediaMmages_id_Delete {
+type ProductsFields_mediaImages_isMain_Delete {
+  permission: Boolean!
+}
+
+type ProductsFields_mediaImages_id {
+  create: ProductsFields_mediaImages_id_Create
+  read: ProductsFields_mediaImages_id_Read
+  update: ProductsFields_mediaImages_id_Update
+  delete: ProductsFields_mediaImages_id_Delete
+}
+
+type ProductsFields_mediaImages_id_Create {
+  permission: Boolean!
+}
+
+type ProductsFields_mediaImages_id_Read {
+  permission: Boolean!
+}
+
+type ProductsFields_mediaImages_id_Update {
+  permission: Boolean!
+}
+
+type ProductsFields_mediaImages_id_Delete {
   permission: Boolean!
 }
 
@@ -15137,59 +13372,13 @@ type Mutation {
 
 input mutationPageInput {
   title: String!
-  publishedOn: String
-  hero: mutationPage_HeroInput!
   layout: JSON
+  publishedOn: String
   slug: String
   meta: mutationPage_MetaInput
   updatedAt: String
   createdAt: String
   _status: Page__status_MutationInput
-}
-
-input mutationPage_HeroInput {
-  type: Page_Hero_type_MutationInput!
-  richText: JSON!
-  links: [mutationPage_Hero_LinksInput]
-  media: String
-}
-
-enum Page_Hero_type_MutationInput {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-input mutationPage_Hero_LinksInput {
-  link: mutationPage_Hero_Links_LinkInput
-  id: String
-}
-
-input mutationPage_Hero_Links_LinkInput {
-  type: String
-  newTab: Boolean
-  reference: Page_Hero_Links_Link_ReferenceRelationshipInput
-  url: String
-  label: String!
-  icon: String
-  appearance: Page_Hero_Links_Link_appearance_MutationInput
-}
-
-input Page_Hero_Links_Link_ReferenceRelationshipInput {
-  relationTo: Page_Hero_Links_Link_ReferenceRelationshipInputRelationTo
-  value: JSON
-}
-
-enum Page_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
-  pages
-}
-
-enum Page_Hero_Links_Link_appearance_MutationInput {
-  default
-  primary
-  secondary
 }
 
 input mutationPage_MetaInput {
@@ -15205,59 +13394,13 @@ enum Page__status_MutationInput {
 
 input mutationPageUpdateInput {
   title: String
-  publishedOn: String
-  hero: mutationPageUpdate_HeroInput!
   layout: JSON
+  publishedOn: String
   slug: String
   meta: mutationPageUpdate_MetaInput
   updatedAt: String
   createdAt: String
   _status: PageUpdate__status_MutationInput
-}
-
-input mutationPageUpdate_HeroInput {
-  type: PageUpdate_Hero_type_MutationInput!
-  richText: JSON!
-  links: [mutationPageUpdate_Hero_LinksInput]
-  media: String
-}
-
-enum PageUpdate_Hero_type_MutationInput {
-  none
-  highImpact
-  mediumImpact
-  lowImpact
-  customHero
-}
-
-input mutationPageUpdate_Hero_LinksInput {
-  link: mutationPageUpdate_Hero_Links_LinkInput
-  id: String
-}
-
-input mutationPageUpdate_Hero_Links_LinkInput {
-  type: String
-  newTab: Boolean
-  reference: PageUpdate_Hero_Links_Link_ReferenceRelationshipInput
-  url: String
-  label: String!
-  icon: String
-  appearance: PageUpdate_Hero_Links_Link_appearance_MutationInput
-}
-
-input PageUpdate_Hero_Links_Link_ReferenceRelationshipInput {
-  relationTo: PageUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo
-  value: JSON
-}
-
-enum PageUpdate_Hero_Links_Link_ReferenceRelationshipInputRelationTo {
-  pages
-}
-
-enum PageUpdate_Hero_Links_Link_appearance_MutationInput {
-  default
-  primary
-  secondary
 }
 
 input mutationPageUpdate_MetaInput {
@@ -15273,7 +13416,6 @@ enum PageUpdate__status_MutationInput {
 
 input mutationProductInput {
   title: String!
-  publishedOn: String
   layout: JSON
   stripeProductID: String
   priceJSON: String
@@ -15292,8 +13434,9 @@ input mutationProductInput {
   ean: String
   description: String
   keywords: String
+  bestseller: Boolean
   mediaVideo: [mutationProduct_MediaVideoInput]
-  mediaMmages: [mutationProduct_MediaMmagesInput]
+  mediaImages: [mutationProduct_MediaImagesInput]
   categories: [String]
   manufacturer: String
   warehouse: String
@@ -15311,8 +13454,9 @@ input mutationProduct_MediaVideoInput {
   id: String
 }
 
-input mutationProduct_MediaMmagesInput {
+input mutationProduct_MediaImagesInput {
   url: String
+  isMain: Boolean
   id: String
 }
 
@@ -15329,7 +13473,6 @@ enum Product__status_MutationInput {
 
 input mutationProductUpdateInput {
   title: String
-  publishedOn: String
   layout: JSON
   stripeProductID: String
   priceJSON: String
@@ -15348,8 +13491,9 @@ input mutationProductUpdateInput {
   ean: String
   description: String
   keywords: String
+  bestseller: Boolean
   mediaVideo: [mutationProductUpdate_MediaVideoInput]
-  mediaMmages: [mutationProductUpdate_MediaMmagesInput]
+  mediaImages: [mutationProductUpdate_MediaImagesInput]
   categories: [String]
   manufacturer: String
   warehouse: String
@@ -15367,8 +13511,9 @@ input mutationProductUpdate_MediaVideoInput {
   id: String
 }
 
-input mutationProductUpdate_MediaMmagesInput {
+input mutationProductUpdate_MediaImagesInput {
   url: String
+  isMain: Boolean
   id: String
 }
 

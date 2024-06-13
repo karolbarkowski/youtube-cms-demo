@@ -7,6 +7,7 @@ export const warehouseFetchByErpId = async (erpId: string): Promise<Warehouse> =
         Warehouses (where: { erpId: { equals: "${erpId}" }}) {
           docs {
             id
+            erpId
             name
             description
           }

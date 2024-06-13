@@ -46,26 +46,6 @@ const Products: CollectionConfig = {
       required: true,
     },
     {
-      name: 'publishedOn',
-      type: 'date',
-      admin: {
-        position: 'sidebar',
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
-      },
-    },
-    {
       type: 'tabs',
       tabs: [
         {
@@ -168,6 +148,10 @@ const Products: CollectionConfig = {
               type: 'text',
             },
             {
+              name: 'bestseller',
+              type: 'checkbox',
+            },
+            {
               name: 'mediaVideo',
               type: 'array',
               fields: [
@@ -178,12 +162,16 @@ const Products: CollectionConfig = {
               ],
             },
             {
-              name: 'mediaMmages',
+              name: 'mediaImages',
               type: 'array',
               fields: [
                 {
                   name: 'url',
                   type: 'text',
+                },
+                {
+                  name: 'isMain',
+                  type: 'checkbox',
                 },
               ],
             },

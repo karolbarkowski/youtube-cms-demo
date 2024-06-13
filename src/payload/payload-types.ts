@@ -47,31 +47,6 @@ export interface Config {
 export interface Page {
   id: string;
   title: string;
-  publishedOn?: string | null;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'customHero';
-    richText: {
-      [k: string]: unknown;
-    }[];
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            icon?: string | Media | null;
-            appearance?: ('default' | 'primary' | 'secondary') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: string | Media | null;
-  };
   layout: (
     | {
         invertBackground?: boolean | null;
@@ -160,7 +135,15 @@ export interface Page {
         blockName?: string | null;
         blockType: 'archive';
       }
+    | {
+        ProductsCount?: number | null;
+        ListType?: ('Bestsellers' | 'Recent') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'productsSlider';
+      }
   )[];
+  publishedOn?: string | null;
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -215,7 +198,6 @@ export interface ProductCategory {
 export interface Product {
   id: string;
   title: string;
-  publishedOn?: string | null;
   layout?:
     | (
         | {
@@ -414,15 +396,17 @@ export interface Product {
   ean?: string | null;
   description?: string | null;
   keywords?: string | null;
+  bestseller?: boolean | null;
   mediaVideo?:
     | {
         url?: string | null;
         id?: string | null;
       }[]
     | null;
-  mediaMmages?:
+  mediaImages?:
     | {
         url?: string | null;
+        isMain?: boolean | null;
         id?: string | null;
       }[]
     | null;

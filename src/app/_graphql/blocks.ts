@@ -71,3 +71,11 @@ export const ARCHIVE_BLOCK = `
   populatedDocsTotal
 }
 `
+
+export const PRODUCTS_SLIDER_BLOCK = `
+...on ProductsSlider {
+  blockType
+  ProductsCount
+  ListType
+}
+`

@@ -4,12 +4,9 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 
 import { ProductCategory, Page as PageType } from '../../../payload/payload-types'
-import { staticHome } from '../../../payload/seed/home-static'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
-import { Gutter } from '../../_components/Gutter'
-import { Hero } from '../../_components/Hero'
 import { generateMeta } from '../../_utilities/generateMeta'
 
 // Payload Cloud caches all files through Cloudflare, so we don't need Next.js to cache them as well
@@ -20,25 +17,16 @@ import { generateMeta } from '../../_utilities/generateMeta'
 // If you are not using Payload Cloud then this line can be removed, see `../../../README.md#cache`
 export const dynamic = 'force-dynamic'
 
-import Categories from '../../_components/Categories'
-import Promotion from '../../_components/Promotion'
-
-import classes from './index.module.scss'
-
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: PageType | null = null
-  let categories: ProductCategory[] | null = null
-
   try {
     page = await fetchDoc<PageType>({
       collection: 'pages',
       slug,
       draft: isDraftMode,
     })
-
-    categories = await fetchDocs<ProductCategory>('product-category')
   } catch (error) {
     // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
     // so swallow the error here and simply render the page with fallback data where necessary
@@ -46,41 +34,13 @@ export default async function Page({ params: { slug = 'home' } }) {
     // console.error(error)
   }
 
-  // if no `home` page exists, render a static one using dummy content
-  // you should delete this code once you have a home page in the CMS
-  // this is really only useful for those who are demoing this template
-  if (!page && slug === 'home') {
-    page = staticHome
-  }
-
   if (!page) {
     return notFound()
   }
 
-  const { hero, layout } = page
+  const { layout } = page
 
-  return (
-    <React.Fragment>
-      {slug === 'home' ? (
-        <section>
-          <Hero {...hero} />
-
-          <Gutter className={classes.home}>
-            <Categories categories={categories} />
-            <Promotion />
-          </Gutter>
-        </section>
-      ) : (
-        <>
-          <Hero {...hero} />
-          <Blocks
-            blocks={layout}
-            disableTopPadding={!hero || hero?.type === 'none' || hero?.type === 'lowImpact'}
-          />
-        </>
-      )}
-    </React.Fragment>
-  )
+  return <Blocks blocks={layout} />
 }
 
 export async function generateStaticParams() {
@@ -108,10 +68,6 @@ export async function generateMetadata({ params: { slug = 'home' } }): Promise<M
     // this is so that we can render a static home page for the demo
     // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
     // in production you may want to redirect to a 404  page or at least log the error somewhere
-  }
-
-  if (!page && slug === 'home') {
-    page = staticHome
   }
 
   return generateMeta({ doc: page })

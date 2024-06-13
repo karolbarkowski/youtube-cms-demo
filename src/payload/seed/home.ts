@@ -5,8 +5,21 @@ export const home: Partial<Page> = {
   slug: 'home',
   _status: 'published',
   meta: {
-    title: 'Payload E-Commerce Template',
-    description: 'An open-source e-commerce store built with Payload and Next.js.',
+    title: 'Mediapart',
+    description: '',
   },
-  layout: [],
+  layout: [
+    {
+      blockName: 'Recent Products',
+      blockType: 'productsSlider',
+      ListType: 'Recent',
+      ProductsCount: 5,
+    },
+    {
+      blockName: 'Best Selling Products',
+      blockType: 'productsSlider',
+      ListType: 'Bestsellers',
+      ProductsCount: 5,
+    },
+  ],
 }
