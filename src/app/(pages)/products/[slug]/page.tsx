@@ -1,9 +1,8 @@
-import React from 'react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-import { Product, Product as ProductType } from '../../../../payload/payload-types'
+import { Product as ProductType } from '../../../../payload/payload-types'
 import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
 import { Blocks } from '../../../_components/Blocks'
@@ -18,10 +17,10 @@ export const dynamic = 'force-dynamic'
 export default async function Product({ params: { slug } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
-  let product: Product | null = null
+  let product: ProductType | null = null
 
   try {
-    product = await fetchDoc<Product>({
+    product = await fetchDoc<ProductType>({
       collection: 'products',
       slug,
       draft: isDraftMode,
@@ -77,10 +76,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params: { slug } }): Promise<Metadata> {
   const { isEnabled: isDraftMode } = draftMode()
 
-  let product: Product | null = null
-
+  let product: ProductType | null = null
   try {
-    product = await fetchDoc<Product>({
+    product = await fetchDoc<ProductType>({
       collection: 'products',
       slug,
       draft: isDraftMode,
