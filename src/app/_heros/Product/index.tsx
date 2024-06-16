@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Category, Product } from '../../../payload/payload-types'
+import { Product, ProductCategory } from '../../../payload/payload-types'
 import { AddToCartButton } from '../../_components/AddToCartButton'
 import { Gutter } from '../../_components/Gutter'
 import { Media } from '../../_components/Media'
@@ -28,7 +28,7 @@ export const ProductHero: React.FC<{
         <div className={classes.categoryWrapper}>
           <div className={classes.categories}>
             {categories?.map((category, index) => {
-              const { title: categoryTitle } = category as Category
+              const { title: categoryTitle } = category as ProductCategory
 
               const titleToUse = categoryTitle || 'Generic'
               const isLast = index === categories.length - 1
