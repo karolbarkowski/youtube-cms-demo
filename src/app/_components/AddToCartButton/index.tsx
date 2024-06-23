@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 import { Product } from '../../../payload/payload-types'
 import { useCart } from '../../_providers/Cart'

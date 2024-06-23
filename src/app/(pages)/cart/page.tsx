@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -8,8 +7,6 @@ import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchSettings } from '../../_api/fetchGlobals'
 import { Blocks } from '../../_components/Blocks'
 import { Gutter } from '../../_components/Gutter'
-import { Hero } from '../../_components/Hero'
-import { Message } from '../../_components/Message'
 import { generateMeta } from '../../_utilities/generateMeta'
 import { CartPage } from './CartPage'
 
