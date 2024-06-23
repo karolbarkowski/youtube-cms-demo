@@ -1,14 +1,20 @@
 import React, { Fragment } from 'react'
 
-import { Page } from '../../../payload/payload-types'
+import { Media as MediaType } from '../../../payload/payload-types'
 import { Gutter } from '../../_components/Gutter'
-import { CMSLink } from '../../_components/Link'
+import { CMSLink, CMSLinkType } from '../../_components/Link'
 import { Media } from '../../_components/Media'
 import RichText from '../../_components/RichText'
 
 import classes from './index.module.scss'
 
-export const HighImpactHero: React.FC<Page['hero']> = ({ richText, media, links }) => {
+type HeroBlock = {
+  richText: { [k: string]: unknown }[]
+  media?: MediaType
+  links?: { link: CMSLinkType }[]
+}
+
+export const HighImpactHero: React.FC<HeroBlock> = ({ richText, media, links }) => {
   return (
     <Gutter className={classes.hero}>
       <div className={classes.content}>

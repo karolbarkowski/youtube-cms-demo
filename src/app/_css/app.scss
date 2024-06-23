@@ -58,15 +58,15 @@ body {
   flex: 1 1 auto;
 }
 
-::selection {
-  background: var(--color-dark-500);
-  color: var(--color-base-800);
-}
+// ::selection {
+//   background: var(--color-dark-500);
+//   color: var(--color-base-800);
+// }
 
-::-moz-selection {
-  background: var(--color-dark-50);
-  color: var(--color-base-800);
-}
+// ::-moz-selection {
+//   background: var(--color-dark-50);
+//   color: var(--color-base-800);
+// }
 
 img {
   max-width: 100%;

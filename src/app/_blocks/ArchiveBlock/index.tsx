@@ -3,9 +3,8 @@ import React from 'react'
 import { CollectionArchive } from '../../_components/CollectionArchive'
 import { Gutter } from '../../_components/Gutter'
 import RichText from '../../_components/RichText'
+import { cn } from '../../_utilities/cn'
 import { ArchiveBlockProps } from './types'
-
-import classes from './index.module.scss'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -24,20 +23,22 @@ export const ArchiveBlock: React.FC<
   } = props
 
   return (
-    <div id={`block-${id}`} className={classes.archiveBlock}>
+    <div id={cn(id && `block-${id}`)} className="relative">
       {introContent && (
-        <Gutter className={classes.introContent}>
+        <Gutter className="mb-12 md:mb-12">
           <RichText content={introContent} />
         </Gutter>
       )}
-      <CollectionArchive
-        populateBy={populateBy}
-        relationTo={relationTo}
-        populatedDocs={populatedDocs}
-        populatedDocsTotal={populatedDocsTotal}
-        categories={categories}
-        limit={limit}
-      />
+      <Gutter>
+        <CollectionArchive
+          populateBy={populateBy}
+          relationTo={relationTo}
+          populatedDocs={populatedDocs}
+          populatedDocsTotal={populatedDocsTotal}
+          categories={categories}
+          limit={limit}
+        />
+      </Gutter>
     </div>
   )
 }

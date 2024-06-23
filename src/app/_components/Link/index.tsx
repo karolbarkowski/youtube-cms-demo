@@ -1,10 +1,10 @@
-import React from 'react'
 import Link from 'next/link'
+import React from 'react'
 
 import { Page } from '../../../payload/payload-types'
 import { Button, Props as ButtonProps } from '../Button'
 
-type CMSLinkType = {
+export type CMSLinkType = {
   type?: 'custom' | 'reference'
   url?: string
   newTab?: boolean
