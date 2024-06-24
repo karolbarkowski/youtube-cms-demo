@@ -4,10 +4,6 @@ export const productsPage: Omit<Page, 'updatedAt' | 'createdAt' | 'id'> = {
   title: 'Products',
   slug: 'products',
   _status: 'published',
-  meta: {
-    title: 'Shop all products',
-    description: 'Shop everything from goods and services to digital assets and gated content.',
-  },
   layout: [
     {
       blockName: 'Archive Block',
