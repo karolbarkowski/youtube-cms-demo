@@ -145,11 +145,6 @@ export interface Page {
   )[];
   publishedOn?: string | null;
   slug?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: string | Media | null;
-  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -410,17 +405,15 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  seoImageUrl?: string | null;
   categories?: (string | ProductCategory)[] | null;
   manufacturer?: (string | null) | Manufacturer;
   warehouse?: (string | null) | Warehouse;
   relatedProducts?: (string | Product)[] | null;
   slug?: string | null;
   skipSync?: boolean | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: string | Media | null;
-  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;

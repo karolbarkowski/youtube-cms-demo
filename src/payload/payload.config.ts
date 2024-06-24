@@ -4,7 +4,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-imp
 // import formBuilder from '@payloadcms/plugin-form-builder'
 import nestedDocs from '@payloadcms/plugin-nested-docs'
 import redirects from '@payloadcms/plugin-redirects'
-import seo from '@payloadcms/plugin-seo'
+// import seo from '@payloadcms/plugin-seo'
 import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
 import stripePlugin from '@payloadcms/plugin-stripe'
 import { slateEditor } from '@payloadcms/richtext-slate' // editor-import
@@ -153,11 +153,6 @@ export default buildConfig({
     }),
     nestedDocs({
       collections: ['product-categories'],
-    }),
-    seo({
-      collections: ['pages', 'products'],
-      generateTitle,
-      uploadsCollection: 'media',
     }),
     // payloadCloud(),
   ],

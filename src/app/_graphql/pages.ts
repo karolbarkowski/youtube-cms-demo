@@ -5,7 +5,6 @@ import {
   MEDIA_BLOCK,
   PRODUCTS_SLIDER_BLOCK,
 } from './blocks'
-import { META } from './meta'
 
 export const PAGES = `
   query Pages {
@@ -31,7 +30,6 @@ export const PAGE = `
           ${ARCHIVE_BLOCK}
           ${PRODUCTS_SLIDER_BLOCK}
         }
-        ${META}
       }
     }
   }

@@ -177,6 +177,26 @@ const Products: CollectionConfig = {
             },
           ],
         },
+        {
+          label: 'SEO',
+          fields: [
+            {
+              name: 'seoTitle',
+              label: 'Title',
+              type: 'text',
+            },
+            {
+              name: 'seoDescription',
+              label: 'description',
+              type: 'textarea',
+            },
+            {
+              name: 'seoImageUrl',
+              label: 'Image Url',
+              type: 'text',
+            },
+          ],
+        },
       ],
     },
     {

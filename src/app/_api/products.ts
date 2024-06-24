@@ -39,13 +39,9 @@ export const productFetchByErpId = async (erpId: string): Promise<Product> => {
               id
               title
             }
-            meta {
-              title
-              description
-              image {
-                url
-              }
-            }
+            seoTitle
+            seoImageUrl
+            seoDescription
           }
         }
       }

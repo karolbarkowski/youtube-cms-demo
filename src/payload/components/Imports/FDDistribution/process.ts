@@ -28,6 +28,15 @@ const parserOptions = {
 const ERP_PREFIX = 'FDD_'
 const BuildErpId = (id: string) => `${ERP_PREFIX}${id}`
 
+function sleep(milliseconds) {
+  var start = new Date().getTime()
+  for (var i = 0; i < 1e7; i++) {
+    if (new Date().getTime() - start > milliseconds) {
+      break
+    }
+  }
+}
+
 export default async (xmlFileContent: string): Promise<FDDistribution> => {
   const parser = new XMLParser(parserOptions)
   let data = parser.parse(xmlFileContent) as FDDistribution
@@ -36,10 +45,10 @@ export default async (xmlFileContent: string): Promise<FDDistribution> => {
   if (!Array.isArray(data.dane.magazyny.m)) data.dane.magazyny.m = [data.dane.magazyny.m]
   if (!Array.isArray(data.dane.producenci.pr)) data.dane.producenci.pr = [data.dane.producenci.pr]
 
-  await processUOMs(data.dane.jednostki_miary.jm)
-  await processWarehouses(data.dane.magazyny.m)
-  await processManufacturers(data.dane.producenci.pr)
-  await processCategories(data.dane.kategorie.k)
+  // await processUOMs(data.dane.jednostki_miary.jm)
+  // await processWarehouses(data.dane.magazyny.m)
+  // await processManufacturers(data.dane.producenci.pr)
+  // await processCategories(data.dane.kategorie.k)
   await processProducts(data.dane.produkty.p)
 
   return data
@@ -54,6 +63,7 @@ async function processUOMs(data: JednostkaMiary[]) {
     } as Uom
 
     await Upsert(uomFetchByErpId, uomUpdate, uomCreate, erpId, uom)
+    sleep(100)
   })
 }
 
@@ -67,6 +77,7 @@ async function processWarehouses(data: Magazyn[]) {
     } as Warehouse
 
     await Upsert(warehouseFetchByErpId, warehouseUpdate, warehouseCreate, erpId, warehouse)
+    sleep(100)
   })
 }
 
@@ -88,6 +99,7 @@ async function processManufacturers(data: Producent[]) {
       erpId,
       manufacturer,
     )
+    sleep(100)
   })
 }
 
@@ -103,11 +115,14 @@ async function processCategories(data: Kategoria[]) {
     } as ProductCategory
 
     await Upsert(categoryFetchByErpId, categoryUpdate, categoryCreate, erpId, category)
+    sleep(100)
   })
 }
 
 async function processProducts(data: Produkt[]) {
-  data.forEach(async p => {
+  // data.forEach(async p => {
+  for (let i = 0; i < 10; i++) {
+    let p = data[i]
     const erpId = BuildErpId(p._id)
     const warehouse = await warehouseFetchByErpId(`${ERP_PREFIX}${p._magazyn_id}`)
     const manufacturer = await manufacturerFetchByErpId(`${ERP_PREFIX}${p._producent_id}`)
@@ -145,13 +160,12 @@ async function processProducts(data: Produkt[]) {
       categories: [category.id],
       mediaImages: images,
       mediaVideo: videos,
-      meta: {
-        description: p.html_description,
-        image: mainImage?._url,
-        title: p.html_title,
-      },
+      seoDescription: p.html_description,
+      seoImageUrl: mainImage?._url,
+      seoTitle: p.html_title,
     } as Product
 
     await Upsert(productFetchByErpId, productUpdate, productCreate, erpId, product)
-  })
+    sleep(100)
+  }
 }
