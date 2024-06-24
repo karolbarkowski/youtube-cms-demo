@@ -39,6 +39,7 @@
     "escape-html": "^1.0.3",
     "express": "^4.19.2",
     "fast-xml-parser": "^4.4.0",
+    "html-entities": "^2.5.2",
     "next": "14.2.3",
     "payload": "^2.18.3",
     "payload-admin-bar": "^1.0.6",

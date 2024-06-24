@@ -51,6 +51,56 @@ export const productFetchByErpId = async (erpId: string): Promise<Product> => {
   return json.data?.Products?.docs[0]
 }
 
+export const productFetchBySlug = async (slug: string): Promise<Product> => {
+  const body = {
+    query: `query Product {
+        Products(where: { slug: { equals: "${slug}" } }) {
+          docs {
+            id
+            title
+            description
+            price
+            pricePrevious
+            vat
+            weight
+            quantity
+            quantityMin
+            quantityStep
+            name
+            code
+            ean
+            description
+            keywords
+            mediaVideo {
+              url
+            }
+            mediaImages {
+              url
+            }
+            manufacturer {
+              name
+              title
+            }
+            warehouse {
+              name
+              description
+            }
+            relatedProducts {
+              id
+              title
+            }
+            seoTitle
+            seoImageUrl
+            seoDescription
+          }
+        }
+      }
+    `,
+  }
+  const json = await BuildRequest(body)
+  return json.data?.Products?.docs[0]
+}
+
 export const productCreate = async (product: Product): Promise<number> => {
   const body = {
     variables: {

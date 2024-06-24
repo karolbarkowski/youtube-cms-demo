@@ -1,58 +1,34 @@
 import React, { Fragment } from 'react'
-
 import { Product, ProductCategory } from '../../../payload/payload-types'
+import Image from 'next/image'
+import { decode, encode } from 'html-entities'
 import { AddToCartButton } from '../../_components/AddToCartButton'
 import { Gutter } from '../../_components/Gutter'
-import { Media } from '../../_components/Media'
 import { Price } from '../../_components/Price'
-
-import classes from './index.module.scss'
 
 export const ProductHero: React.FC<{
   product: Product
 }> = ({ product }) => {
-  const { title, categories, meta: { image: metaImage, description } = {} } = product
+  console.log(product)
 
   return (
-    <Gutter className={classes.productHero}>
-      <div className={classes.mediaWrapper}>
-        {!metaImage && <div className={classes.placeholder}>No image</div>}
-        {metaImage && typeof metaImage !== 'string' && (
-          <Media imgClassName={classes.image} resource={metaImage} fill />
-        )}
+    <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-row items-start">
+        {product.mediaImages.map((img, i) => (
+          <Image key={i} src={img.url} width={100} height={100} alt={''} />
+        ))}
       </div>
+      <div>
+        <h1>{product.name}</h1>
+        <div dangerouslySetInnerHTML={{ __html: product.description }} />
+        <AddToCartButton product={product} />
+      </div>
+    </div>
 
-      <div className={classes.details}>
-        <h3 className={classes.title}>{title}</h3>
-
-        <div className={classes.categoryWrapper}>
-          <div className={classes.categories}>
-            {categories?.map((category, index) => {
-              const { title: categoryTitle } = category as ProductCategory
-
-              const titleToUse = categoryTitle || 'Generic'
-              const isLast = index === categories.length - 1
-
-              return (
-                <p key={index} className={classes.category}>
-                  {titleToUse} {!isLast && <Fragment>, &nbsp;</Fragment>}
-                  <span className={classes.separator}>|</span>
-                </p>
-              )
-            })}
-          </div>
-          <p className={classes.stock}> In stock</p>
-        </div>
+    /* 
 
         <Price product={product} button={false} />
-
-        <div className={classes.description}>
-          <h6>Description</h6>
-          <p>{description}</p>
-        </div>
-
-        <AddToCartButton product={product} className={classes.addToCartButton} />
-      </div>
-    </Gutter>
+        />
+      </div> */
   )
 }

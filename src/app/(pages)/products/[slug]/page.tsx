@@ -5,26 +5,19 @@ import { notFound } from 'next/navigation'
 import { Product as ProductType } from '../../../../payload/payload-types'
 import { fetchDoc } from '../../../_api/fetchDoc'
 import { fetchDocs } from '../../../_api/fetchDocs'
-import { Blocks } from '../../../_components/Blocks'
-import { PaywallBlocks } from '../../../_components/PaywallBlocks'
 import { ProductHero } from '../../../_heros/Product'
 import { generateMeta } from '../../../_utilities/generateMeta'
+import { productFetchBySlug } from '../../../_api/products'
 
 // Force this page to be dynamic so that Next.js does not cache it
 // See the note in '../../../[slug]/page.tsx' about this
 export const dynamic = 'force-dynamic'
 
 export default async function Product({ params: { slug } }) {
-  const { isEnabled: isDraftMode } = draftMode()
-
   let product: ProductType | null = null
 
   try {
-    product = await fetchDoc<ProductType>({
-      collection: 'products',
-      slug,
-      draft: isDraftMode,
-    })
+    product = await productFetchBySlug(slug)
   } catch (error) {
     console.error(error) // eslint-disable-line no-console
   }
@@ -33,35 +26,7 @@ export default async function Product({ params: { slug } }) {
     notFound()
   }
 
-  const { relatedProducts } = product
-
-  return (
-    <>
-      <ProductHero product={{ ...product, slug }} />
-      {product?.enablePaywall && <PaywallBlocks productSlug={slug as string} disableTopPadding />}
-      <Blocks
-        disableTopPadding
-        blocks={[
-          {
-            blockType: 'relatedProducts',
-            blockName: 'Related Product',
-            relationTo: 'products',
-            introContent: [
-              {
-                type: 'h3',
-                children: [
-                  {
-                    text: 'Related Products',
-                  },
-                ],
-              },
-            ],
-            docs: relatedProducts,
-          },
-        ]}
-      />
-    </>
-  )
+  return <ProductHero product={{ ...product, slug }} />
 }
 
 export async function generateStaticParams() {
